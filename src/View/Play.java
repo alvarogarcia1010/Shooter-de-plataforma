@@ -117,10 +117,5 @@ public class Play extends JFrame{
             JOptionPane.showMessageDialog(null, "Error");
         }
     }
-    
-    private JFrame getFrame(){
-        return this;
-          }
-
-    
+   
 }
