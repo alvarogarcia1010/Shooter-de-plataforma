@@ -1,4 +1,4 @@
-package plataform.shooter;
+package PlataformShooter;
 
 /**
  *
