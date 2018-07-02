@@ -22,7 +22,7 @@ public class Play extends JFrame{
       public static int height = 700;
       public static int width = 1000;
       private JButton encender, apagar, inv;
-      public AudioStream audio1;
+      //public AudioStream audio1;
 		
  
       
@@ -33,8 +33,8 @@ public class Play extends JFrame{
         initialComponent();
         setSize(width,height);
         setLocationRelativeTo(null);
-        musica();
-        stop();
+        //musica();
+        //stop();
     }
     
     public static void main(String[] args){
@@ -67,7 +67,7 @@ public class Play extends JFrame{
         encender.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                musica();
+                //musica();
             }
 
         });
@@ -75,7 +75,7 @@ public class Play extends JFrame{
         apagar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                stop();
+                //stop();
             }
 
         });
@@ -84,9 +84,13 @@ public class Play extends JFrame{
         inv.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                Play p = new Play();
                 Inventario i = new Inventario();
+                p.setEnabled(false);
+                p.setVisible(false);
                 i.setVisible(true);
-                //dispose();  
+                
+                
             }
 
         });
@@ -96,7 +100,7 @@ public class Play extends JFrame{
         
     }
     
-    private void musica(){
+    /*private void musica(){
     
         try{
             String sonido1 = "Music\\\\\\\\Solarstone & Clare Stagg - Jewel (Pure Mix) [Music Video] [HD].wav";
@@ -116,6 +120,6 @@ public class Play extends JFrame{
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error");
         }
-    }
+    }*/
    
 }
