@@ -35,13 +35,13 @@ public class Tiempo{
         Play.labelTimer = new JLabel("00:00:00");
         Play.labelTimer.setFont(Play.fuente);
         Play.labelTimer.setForeground(Color.BLUE);
-        Play.labelTimer.setBounds(10, 10, 200, 30);
+        Play.labelTimer.setBounds(820, 10, 150, 30);
         
         //Boton Pausa
         Play.btnPause = new JButton("Pausar");
         Play.btnPause.setFont(Play.fuente);
         Play.btnPause.setForeground(Color.BLUE);
-        Play.btnPause.setBounds(10, 50,200,30);
+        Play.btnPause.setBounds(820, 50,150,30);
     }
     
     public void initTimer(){

@@ -1,6 +1,7 @@
 package PlataformShooter;
 
-import View.Play;
+import View.Bienvenida;
+
 
 /**
  *
@@ -12,7 +13,7 @@ public class PlataformShooter {
 
     public static void main(String[] args) {
         // TODO code application logic here
-                Play p = new Play();
+                Bienvenida p = new Bienvenida();
                 
                 p.setVisible(true);
     }
