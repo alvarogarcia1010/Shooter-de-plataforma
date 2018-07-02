@@ -12,7 +12,7 @@ public class PlataformShooter {
 
     public static void main(String[] args) {
         // TODO code application logic here
-                        Play p = new Play();
+                Play p = new Play();
                 
                 p.setVisible(true);
     }
