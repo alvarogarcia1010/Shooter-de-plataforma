@@ -6,24 +6,27 @@
 package Modelo.Disparos;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
  * @author ryane
  */
-public class DisparosManager {
+public class DisparosManager extends Thread{
     protected String Nombre;
     protected int Danio;
-    protected ArrayList<String> Posiciones;
+    protected JLabel bullet;
     protected int PosicionActualX;
     protected int PosicionActualY;
 
-    public DisparosManager(String Nombre, int Danio, ArrayList<String> Posiciones, int PosicionActualX, int PosicionActualY) {
+    public DisparosManager(String Nombre, int Danio, int PosicionActualX, int PosicionActualY, JLabel bullet) {
         this.Nombre = Nombre;
         this.Danio = Danio;
-        this.Posiciones = Posiciones;
         this.PosicionActualX = PosicionActualX;
         this.PosicionActualY = PosicionActualY;
+        this.bullet = bullet;
     }
 
     public DisparosManager() {
@@ -37,9 +40,6 @@ public class DisparosManager {
         return Danio;
     }
 
-    public ArrayList<String> getPosiciones() {
-        return Posiciones;
-    }
 
     public int getPosicionActualX() {
         return PosicionActualX;
@@ -57,16 +57,25 @@ public class DisparosManager {
         this.Danio = Danio;
     }
 
-    public void setPosiciones(ArrayList<String> Posiciones) {
-        this.Posiciones = Posiciones;
-    }
-
     public void setPosicionActualX(int PosicionActualX) {
         this.PosicionActualX = PosicionActualX;
     }
 
     public void setPosicionActualY(int PosicionActualY) {
         this.PosicionActualY = PosicionActualY;
+    }
+    
+    @Override
+    public void run(){
+        for(int i = PosicionActualX; i<500 ; i+=10){
+            System.out.println(this.Nombre + "avanza");
+            this.bullet.setLocation(i, PosicionActualY);
+            try{
+                sleep(100);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
     
     
