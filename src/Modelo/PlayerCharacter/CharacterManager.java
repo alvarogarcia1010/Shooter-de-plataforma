@@ -30,7 +30,9 @@ public class CharacterManager extends Thread{
         
     }
 
-    public CharacterManager() {}
+    public CharacterManager() {
+        this.img = new HashMap<>();
+    }
     
     public void addImg(Type claveImg, String url) {
         this.img.put(claveImg, url);
