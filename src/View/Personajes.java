@@ -10,6 +10,7 @@ import static View.Bienvenida.width;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -19,27 +20,30 @@ import javax.swing.JFrame;
  */
 public class Personajes extends JFrame{
     
-      public static int height = 500;
-      public static int width = 500;
+      public static int height = 700;
+      public static int width = 900;
       public JButton p1,p2,p3;
+      PanelPersonaje fondo = new PanelPersonaje();
       
       public Personajes(){
         super("Personajes");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
         initialComponent();
         setSize(width,height);
         setLocationRelativeTo(null);
+        add(fondo);
+        setVisible(true);
+        
       }
       
       public void initialComponent(){
-          p1 = new JButton("P1");
-          p2 = new JButton("P2");
-          p3 = new JButton("P3");
+          p1 = new JButton(new ImageIcon("p1.png"));
+          p2 = new JButton(new ImageIcon("p2.png"));
+          p3 = new JButton(new ImageIcon("p3.png"));
           
-          p1.setBounds(50, 30, 100, 400);
-          p2.setBounds(200, 30, 100, 400);
-          p3.setBounds(350, 30, 100, 400);
+          p1.setBounds(100, 80, 210, 505);
+          p2.setBounds(350, 80, 210, 505);
+          p3.setBounds(600, 80, 210, 505);
           
           Container container = getContentPane();
           container.add(p1);
