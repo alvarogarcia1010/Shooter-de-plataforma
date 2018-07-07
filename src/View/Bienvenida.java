@@ -7,12 +7,16 @@ package View;
 
 import static View.Play.height;
 import static View.Play.width;
+import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,24 +26,40 @@ public class Bienvenida extends JFrame{
       public static int height = 700;
       public static int width = 1000;
       private JButton bienvenida;
+      private JButton about;
+      private JButton rank;
+      PanelBienvenido Fondo = new PanelBienvenido();
       
       
       public Bienvenida(){
         super("Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
         initialComponent();
         setSize(width,height);
         setLocationRelativeTo(null);
+        add(Fondo);
+        setVisible(true);
       }
       
       
       public void initialComponent(){
           //Bienvenida b = new Bienvenida();
+
           bienvenida = new JButton(new ImageIcon("./src/img/welcome.png"));
-          bienvenida.setBounds(400,300,200, 125);   
+          bienvenida.setBounds(800,300,120,50);   
+          about = new JButton(new ImageIcon("about.png"));
+          about.setBounds(800, 400, 120, 50);
+          rank = new JButton(new ImageIcon("rank.png"));
+          rank.setBounds(800, 200, 120, 50);
+          
+          
+          
+          
+
           Container container = getContentPane();
           container.add(bienvenida);
+          container.add(about);
+          container.add(rank);
           
           bienvenida.addActionListener(new ActionListener() {
             @Override
@@ -48,8 +68,23 @@ public class Bienvenida extends JFrame{
                 p.setVisible(true);
                 dispose();  
             }
-
-        });
+            });
+          
+          about.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                About p = new About();
+                p.setVisible(true);
+            }
+          });
+          
+          rank.addActionListener(new ActionListener(){
+             @Override
+            public void actionPerformed(ActionEvent ae) {
+                Ranking p = new Ranking();
+                p.setVisible(true);
+            }
+          });
           
       }
       
@@ -66,5 +101,17 @@ public class Bienvenida extends JFrame{
         });
 
     }
+       
+    private class PanelBienvenido extends JPanel{
+ 
+            @Override
+            public void paint(Graphics g){
+                Dimension tamanio = getSize();
+                ImageIcon image = new ImageIcon(getClass().getResource("/View/Components/b_1.png"));
+                g.drawImage(image.getImage(), 0, 0, tamanio.width, tamanio.height, null);
+                setOpaque(false);
+                super.paint(g);
+            }
+}
 
 }
