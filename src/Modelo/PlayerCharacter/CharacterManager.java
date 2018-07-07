@@ -1,79 +1,96 @@
 
 package Modelo.PlayerCharacter;
 
-import java.util.ArrayList;
+import PlataformShooter.Type;
+import java.util.HashMap;
 
 /**
  *
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
+
 public class CharacterManager extends Thread{
+    
     protected String Nombre;
     protected int vida;
-    protected int Danio;
-    protected ArrayList<String> Posiciones;
-    protected int PosicionActualX;
-    protected int PosicionActualY;
+    protected HashMap<Type,String> img;
+    protected int posicionActualX;
+    protected int posicionActualY;
+    protected int deltaX;
+    protected int deltaY;
 
-    public CharacterManager(String Nombre, int vida, int Danio, ArrayList<String> Posiciones, int PosicionActualX, int PosicionActualY) {
+    public CharacterManager(String Nombre, int vida, int PosicionActualX, int PosicionActualY, int deltaX, int deltaY) {
         this.Nombre = Nombre;
         this.vida = vida;
-        this.Danio = Danio;
-        this.Posiciones = Posiciones;
-        this.PosicionActualX = PosicionActualX;
-        this.PosicionActualY = PosicionActualY;
+        this.posicionActualX = PosicionActualX;
+        this.posicionActualY = PosicionActualY;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+        this.img = new HashMap<>();
+        
     }
 
-    public CharacterManager() {
-    }
+    public CharacterManager() {}
+    
+    public void addImg(Type claveImg, String url) {
+        this.img.put(claveImg, url);
+}
 
     public String getNombre() {
         return Nombre;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public int getDanioo() {
-        return Danio;
-    }
-
-    public ArrayList<String> getPosiciones() {
-        return Posiciones;
-    }
-
-    public int getPosicionActualX() {
-        return PosicionActualX;
-    }
-
-    public int getPosicionActualY() {
-        return PosicionActualY;
     }
 
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
 
+    public int getVida() {
+        return vida;
+    }
+
     public void setVida(int vida) {
         this.vida = vida;
     }
 
-    public void setDanio(int Danio) {
-        this.Danio = Danio;
+    public HashMap<Type, String> getImg() {
+        return img;
     }
 
-    public void setPosiciones(ArrayList<String> Posiciones) {
-        this.Posiciones = Posiciones;
+    public void setImg(HashMap<Type, String> img) {
+        this.img = img;
     }
 
-    public void setPosicionActualX(int PosicionActualX) {
-        this.PosicionActualX = PosicionActualX;
+    public int getPosicionActualX() {
+        return posicionActualX;
     }
 
-    public void setPosicionActualY(int PosicionActualY) {
-        this.PosicionActualY = PosicionActualY;
+    public void setPosicionActualX(int posicionActualX) {
+        this.posicionActualX = posicionActualX;
     }
-    
+
+    public int getPosicionActualY() {
+        return posicionActualY;
+    }
+
+    public void setPosicionActualY(int posicionActualY) {
+        this.posicionActualY = posicionActualY;
+    }
+
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    public void setDeltaX(int deltaX) {
+        this.deltaX = deltaX;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
+    }
+
+    public void setDeltaY(int deltaY) {
+        this.deltaY = deltaY;
+    }
+
     
 }
