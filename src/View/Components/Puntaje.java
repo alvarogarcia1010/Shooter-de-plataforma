@@ -24,9 +24,19 @@ public class Puntaje {
         Play.nombreJugador.setForeground(Color.BLACK);
 //        Play.labelTimer.setOpaque(true);
 //        Play.labelTimer.setBackground(Color.WHITE);
-        Play.nombreJugador.setHorizontalAlignment(JLabel.LEFT);
+        Play.nombreJugador.setHorizontalAlignment(JLabel.CENTER);
         Play.nombreJugador.setVerticalAlignment(JLabel.CENTER);
-        Play.nombreJugador.setBounds(25, 600, 250, 50);
+        Play.nombreJugador.setBounds(25, 630, 150, 30);
+        
+        //Etiqueta Vida
+        Play.etiquetaVida = new JLabel("Vida: ");
+        Play.etiquetaVida.setFont(Play.fuenteSecundaria);
+        Play.etiquetaVida.setForeground(Color.BLACK);
+//        Play.vida.setOpaque(true);
+//        Play.vida.setBackground(Color.WHITE);
+        Play.etiquetaVida.setHorizontalAlignment(JLabel.LEFT);
+        Play.etiquetaVida.setVerticalAlignment(JLabel.CENTER);
+        Play.etiquetaVida.setBounds(25, 600, 150, 30);
         
         //Vida
         Play.vida = new JLabel("100");
@@ -36,7 +46,7 @@ public class Puntaje {
 //        Play.vida.setBackground(Color.WHITE);
         Play.vida.setHorizontalAlignment(JLabel.LEFT);
         Play.vida.setVerticalAlignment(JLabel.CENTER);
-        Play.vida.setBounds(300, 600, 250, 50);
+        Play.vida.setBounds(125, 600, 100, 30);
         
         //Etiqueta Puntaje
         Play.etiquetaPuntaje = new JLabel("Puntuacion");
@@ -46,7 +56,7 @@ public class Puntaje {
 //        Play.etiquetaPuntaje.setBackground(Color.WHITE);
         Play.etiquetaPuntaje.setHorizontalAlignment(JLabel.CENTER);
         Play.etiquetaPuntaje.setVerticalAlignment(JLabel.CENTER);
-        Play.etiquetaPuntaje.setBounds(10, 10, 250, 50);
+        Play.etiquetaPuntaje.setBounds(5, 10, 200, 30);
         
         //Puntaje
         Play.puntaje = new JLabel("0000");
@@ -56,7 +66,7 @@ public class Puntaje {
 //        Play.puntaje.setBackground(Color.WHITE);
         Play.puntaje.setHorizontalAlignment(JLabel.CENTER);
         Play.puntaje.setVerticalAlignment(JLabel.CENTER);
-        Play.puntaje.setBounds(10, 60, 250, 50);
+        Play.puntaje.setBounds(5, 40, 200, 30);
     }
     
     public void sumarPuntos(){
@@ -68,18 +78,30 @@ public class Puntaje {
     }
     
     public void restarVida(){
-        String msj = "Juego Terminado";
+        String msj = "Juego Terminado \n Puntuación: "+ Play.puntaje.getText() + "\nTiempo: "+ Play.labelTimer.getText();
         try{
             int temp = Integer.parseInt(Play.vida.getText());
-            if(temp<1){
-                JOptionPane.showMessageDialog(null,msj);
+            verificarVida(temp,msj);
 
-            }else{
+            if(temp>=1){
                 temp-=10;
                 Play.vida.setText(""+ temp);
             }
+            if(temp < 1){
+                Play.cronometro.initTimer();
+            }
+            verificarVida(temp,msj);
+
+
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,msj);
+        }
+    }
+    
+    public void verificarVida(int temp, String msj){
+        if(temp <10){
+            JOptionPane.showMessageDialog(null,msj);
+
         }
     }
 }
