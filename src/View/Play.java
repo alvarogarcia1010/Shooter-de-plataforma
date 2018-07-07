@@ -15,6 +15,17 @@ import javax.swing.JOptionPane;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
+/**
+ *
+ * @author Alvaro García <alvarogarcia1010 at github.com>
+ */
+public class Play extends JFrame {
+
+    public static Font fuente = new Font("Comic Sans MS", 3, 30);
+    public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
+    public static int height = 700;
+    public static int width = 1000;
+
     public static JButton encender, apagar, inventario;
     //public AudioStream audio1;
 
@@ -56,16 +67,6 @@ import sun.audio.AudioStream;
 
     }
 
-/**
- *
- * @author Alvaro García <alvarogarcia1010 at github.com>
- */
-public class Play extends JFrame {
-
-    public static Font fuente = new Font("Comic Sans MS", 3, 30);
-    public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
-    public static int height = 700;
-    public static int width = 1000;
     public void initialComponent() {
 //        encender = new JButton(new ImageIcon("encendido.png"));
 //        encender.setBounds(820, 500, 50, 50);
