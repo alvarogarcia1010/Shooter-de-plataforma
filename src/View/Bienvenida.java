@@ -36,7 +36,7 @@ public class Bienvenida extends JFrame{
       
       public void initialComponent(){
           //Bienvenida b = new Bienvenida();
-          bienvenida = new JButton(new ImageIcon("welcome.png"));
+          bienvenida = new JButton(new ImageIcon("./src/img/welcome.png"));
           bienvenida.setBounds(400,300,200, 125);   
           Container container = getContentPane();
           container.add(bienvenida);

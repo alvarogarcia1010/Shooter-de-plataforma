@@ -45,11 +45,11 @@ public class Tiempo{
         //Boton Inventario de Armas
         Play.inventario = new JButton("Elegir arma");
         Play.inventario.setBounds(850, 20, 125, 30);
-        //Boton Pausa
-//        Play.btnPause = new JButton("Pausar");
-//        Play.btnPause.setFont(Play.fuente);
-//        Play.btnPause.setForeground(Color.BLUE);
-//        Play.btnPause.setBounds(820, 50,150,30);
+       // Boton Pausa
+        Play.btnPause = new JButton("SUMAR PUNTAJE");
+        Play.btnPause.setFont(Play.fuente);
+        Play.btnPause.setForeground(Color.BLUE);
+        Play.btnPause.setBounds(820, 50,150,30);
     }
     
     public void initTimer(){

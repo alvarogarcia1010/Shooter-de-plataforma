@@ -22,6 +22,7 @@ import sun.audio.AudioStream;
 public class Play extends JFrame {
 
     public static Font fuente = new Font("Comic Sans MS", 3, 30);
+    public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 700;
     public static int width = 1000;
     public static JButton encender, apagar, inventario;
@@ -30,9 +31,10 @@ public class Play extends JFrame {
     //Controladores de los componentes
     public static Tiempo cronometro = new Tiempo();
     public static Puntaje puntuacion = new Puntaje();
+    public static boolean gameOver = false;
 
     //Componentes de la ventana
-    public static JLabel etiquetaPuntaje, nombreJugador, puntaje;
+    public static JLabel etiquetaPuntaje, nombreJugador, puntaje, vida;
     public static JLabel labelTimer;
     public static JButton btnPause;
 
@@ -81,7 +83,8 @@ public class Play extends JFrame {
         container.add(this.etiquetaPuntaje);
         container.add(this.nombreJugador);
         container.add(this.puntaje);
-//        container.add(this.btnPause);
+        container.add(this.vida);
+        container.add(this.btnPause);
 
     }
 
@@ -91,12 +94,13 @@ public class Play extends JFrame {
 
     public void eventos() {
 
-//        btnPause.addActionListener(new ActionListener(){
-//            @Override
-//            public void actionPerformed(ActionEvent ae) {
-//                
-//            }
-//        });
+        btnPause.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+//                puntuacion.sumarPuntos();
+                  puntuacion.restarVida();
+            }
+        });
 //        encender.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent ae) {
