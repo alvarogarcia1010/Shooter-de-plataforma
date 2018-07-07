@@ -15,16 +15,6 @@ import javax.swing.JOptionPane;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-/**
- *
- * @author Alvaro García <alvarogarcia1010 at github.com>
- */
-public class Play extends JFrame {
-
-    public static Font fuente = new Font("Comic Sans MS", 3, 30);
-    public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
-    public static int height = 700;
-    public static int width = 1000;
     public static JButton encender, apagar, inventario;
     //public AudioStream audio1;
 
@@ -34,7 +24,7 @@ public class Play extends JFrame {
     public static boolean gameOver = false;
 
     //Componentes de la ventana
-    public static JLabel etiquetaPuntaje, nombreJugador, puntaje, vida;
+    public static JLabel etiquetaPuntaje, nombreJugador, puntaje, etiquetaVida,vida;
     public static JLabel labelTimer;
     public static JButton btnPause;
 
@@ -66,6 +56,16 @@ public class Play extends JFrame {
 
     }
 
+/**
+ *
+ * @author Alvaro García <alvarogarcia1010 at github.com>
+ */
+public class Play extends JFrame {
+
+    public static Font fuente = new Font("Comic Sans MS", 3, 30);
+    public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
+    public static int height = 700;
+    public static int width = 1000;
     public void initialComponent() {
 //        encender = new JButton(new ImageIcon("encendido.png"));
 //        encender.setBounds(820, 500, 50, 50);
@@ -84,6 +84,7 @@ public class Play extends JFrame {
         container.add(this.nombreJugador);
         container.add(this.puntaje);
         container.add(this.vida);
+        container.add(this.etiquetaVida);
         container.add(this.btnPause);
 
     }
