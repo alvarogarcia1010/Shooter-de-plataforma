@@ -31,17 +31,25 @@ public class Tiempo{
     }
     
     public void initlabelTimer(){
+
         //Etiqueta Cronometro
         Play.labelTimer = new JLabel("00:00:00");
         Play.labelTimer.setFont(Play.fuente);
-        Play.labelTimer.setForeground(Color.BLUE);
-        Play.labelTimer.setBounds(820, 10, 150, 30);
+        Play.labelTimer.setForeground(Color.BLACK);
+//        Play.labelTimer.setOpaque(true);
+//        Play.labelTimer.setBackground(Color.WHITE);
+        Play.labelTimer.setHorizontalAlignment(JLabel.CENTER);
+        Play.labelTimer.setVerticalAlignment(JLabel.CENTER);
+        Play.labelTimer.setBounds(425, 10, 150, 50);
         
+        //Boton Inventario de Armas
+        Play.inventario = new JButton("Elegir arma");
+        Play.inventario.setBounds(850, 20, 125, 30);
         //Boton Pausa
-        Play.btnPause = new JButton("Pausar");
-        Play.btnPause.setFont(Play.fuente);
-        Play.btnPause.setForeground(Color.BLUE);
-        Play.btnPause.setBounds(820, 50,150,30);
+//        Play.btnPause = new JButton("Pausar");
+//        Play.btnPause.setFont(Play.fuente);
+//        Play.btnPause.setForeground(Color.BLUE);
+//        Play.btnPause.setBounds(820, 50,150,30);
     }
     
     public void initTimer(){

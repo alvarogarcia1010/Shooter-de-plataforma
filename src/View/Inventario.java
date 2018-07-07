@@ -9,6 +9,7 @@ import static View.Personajes.height;
 import static View.Personajes.width;
 import javax.swing.JFrame;
 
+
 /**
  *
  * @author Daniel Alcoleas <your.name at your.org>
@@ -19,7 +20,7 @@ public class Inventario extends JFrame{
     
     public Inventario(){
         super("Inventario Armas");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
         initialComponent();
         setSize(width,height);
