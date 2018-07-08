@@ -29,6 +29,7 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
     Image left = toolkit.getImage("./src/img/left.gif");
     Image bg = toolkit.getImage("./src/img/bg.jpg");
     Image bullet = toolkit.getImage("./src/img/bullet.gif");
+    Image bullet1 = toolkit.getImage("./src/img/bullet1.gif");
     Image image = right;
     int rightX = 200, rightY = 100;
     int bulletNo = 0;
@@ -70,6 +71,8 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
             bulletX[bulletNo] = rightX + 65;
             bulletY[bulletNo] = rightY + 40;
             ++bulletNo;
+            System.out.println(":" + bulletNo);
+            System.out.println(": "+ bulletX.length);
             if(bulletNo>bulletX.length-1) 
                 bulletNo=0;
         }
@@ -106,8 +109,12 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
         g.drawImage(bg, 0, 0, null);
         
         for (int i = 0; i<bulletX.length; i++){
-            if(isShot[i]){
+            if(isShot[i] && image == right){
                 g.drawImage(bullet, bulletX[i], bulletY[i], this);
+            }
+            
+            if (isShot[i] && image == left){
+                g.drawImage(bullet1, bulletX[i], bulletY[i], this);
             }
         }
         
@@ -118,13 +125,18 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
     public void run() {
         while(true){
             for(int i = 0; i<bulletX.length ;i++){
-                if(isShot[i]) 
+                if(isShot[i] && image == right) 
                     bulletX[i]+=20;
                 
-                if(bulletX[i]> 1000){
+                if(isShot[i] && image == left) 
+                    bulletX[i]-=20;
+                
+                
+                if(bulletX[i]> 1000 || bulletX[i]< 0){
                     isShot[i] = false;
-                    bulletX[i] = rightX + 50;
+                    bulletX[i] = rightX + 20;
                     bulletY[i] = rightY + 10;
+                    
                 }
             }
             try{
