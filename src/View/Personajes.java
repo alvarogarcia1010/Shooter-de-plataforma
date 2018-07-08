@@ -40,13 +40,24 @@ public class Personajes extends JFrame{
       }
       
       public void initialComponent(){
-          p1 = new JButton(new ImageIcon("p1.png"));
-          p2 = new JButton(new ImageIcon("p2.png"));
-          p3 = new JButton(new ImageIcon("p3.png"));
+          p1 = new JButton();
+          p2 = new JButton();
+          p3 = new JButton();
           
-          p1.setBounds(100, 80, 210, 505);
-          p2.setBounds(350, 80, 210, 505);
-          p3.setBounds(600, 80, 210, 505);
+          p1.setBounds(60, 80, 210, 505);
+          p1.setOpaque(false);
+          p1.setContentAreaFilled(false);
+          p1.setBorderPainted(false);
+          
+          p2.setBounds(342, 80, 210, 505);
+          p2.setOpaque(false);
+          p2.setContentAreaFilled(false);
+          p2.setBorderPainted(false);
+          
+          p3.setBounds(632, 80, 210, 505);
+          p3.setOpaque(false);
+          p3.setContentAreaFilled(false);
+          p3.setBorderPainted(false);
           
           Container container = getContentPane();
           container.add(p1);
@@ -58,7 +69,6 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
-                p.setVisible(true);
                 dispose();  
             }
 
@@ -69,7 +79,6 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
-                p.setVisible(true);
                 dispose();  
             }
 
@@ -80,7 +89,6 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
-                p.setVisible(true);
                 dispose();  
             }
 
