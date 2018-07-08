@@ -30,7 +30,7 @@ public class FactroyDisparos implements AbstractFactory{
     public DisparosManager getDisparos(String type) {
         switch(type){
             case "Mitch Smith":
-                return new Tipo_1();
+                
         }
         return null;
         }

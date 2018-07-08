@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -48,7 +50,7 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         this.personaje.addImg(Type.ABAJO_R, "./src/img/Marco/MarcoCrouchR.png");
         this.personaje.addImg(Type.CORRE_RIGHT, "./src/img/Marco/MarcoRuning.gif");
         this.personaje.addImg(Type.CORRE_LEFT, "./src/img/Marco/MarcoRuningL.gif");
-        this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShoot.png");
+        this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShootR.png");
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         this.toolkit = Toolkit.getDefaultToolkit();
@@ -96,9 +98,9 @@ public class Character extends JPanel implements ActionListener, KeyListener {
             deltaY=0; 
             posY = 0; 
         }
-        if(posY > 630) { 
+        if(posY > 350) { 
             deltaY=0;
-            posY = 630; 
+            posY = 350; 
         } 
         posX += deltaX; 
         posY += deltaY;
@@ -122,17 +124,21 @@ public class Character extends JPanel implements ActionListener, KeyListener {
             }
         } 
         if (code == KeyEvent.VK_UP){ 
-            System.out.println("Moviendo");
-            deltaY = -10; 
-            deltaX = 0;
-            System.out.println("x: " + posX);
-            System.out.println("y: " + posY);
-            if(imgActual == imagenes.get(Type.IZQUIERDA)){
-                imgActual = imagenes.get(Type.ARRIBA_L);
-            }else{
-                imgActual = imagenes.get(Type.ARRIBA_R);
-            }
+              System.out.println("Moviendo");
+
+                deltaY=-10;
+                deltaX=0;
+
+                 
+                System.out.println("x: " + posX);
+                System.out.println("y: " + posY);
+                if(imgActual == imagenes.get(Type.IZQUIERDA)){
+                    imgActual = imagenes.get(Type.ARRIBA_L);
+                }else{
+                    imgActual = imagenes.get(Type.ARRIBA_R);
+                }
         } 
+        
         if (code == KeyEvent.VK_LEFT){  
             System.out.println("Moviendo");
             deltaY = 0; 
@@ -162,6 +168,8 @@ public class Character extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int code = e.getKeyCode(); 
+    
         if(imgActual == imagenes.get(Type.DISPARA_L) ||
            imgActual == imagenes.get(Type.CORRE_LEFT) ||
            imgActual == imagenes.get(Type.ARRIBA_L) ||
@@ -170,8 +178,15 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         }else{
                 imgActual = imagenes.get(Type.DERECHA);
         }
-        deltaX = 0;
-        deltaY = 0;
+
+        if (code == KeyEvent.VK_UP){
+            deltaX = 0;
+            deltaY = 10;
+
+        }else{
+            deltaX = 0;
+            deltaY = 0;   
+        }
  
     }
     
