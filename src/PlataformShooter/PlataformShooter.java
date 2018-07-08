@@ -1,5 +1,6 @@
 package PlataformShooter;
 
+import Controllers.Connection.Connection;
 import View.Bienvenida;
 
 
@@ -11,11 +12,13 @@ import View.Bienvenida;
 public class PlataformShooter {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
-                Bienvenida p = new Bienvenida();
-                
-                p.setVisible(true);
+                Connection prueba = Connection.getInstance();
+                prueba.getConnection();
+//                Bienvenida p = new Bienvenida();
+//                
+//                p.setVisible(true);
     }
     
 }
