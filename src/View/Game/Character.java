@@ -39,7 +39,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public int bulletNo = 0;
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
-    public  boolean isShot[] = new boolean[10];
+    public boolean isShot[] = new boolean[10];
     
     Thread thread = new Thread(this);
 
@@ -99,9 +99,11 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         
         g.drawImage(imagenes.get(Type.BG),0,0,null);
         
+        
+        isShot [0] = true;
         for (int i = 0; i<bulletX.length; i++){
-            if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
-                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+            if(isShot[0] && imgActual== imagenes.get(Type.DERECHA)){
+                g.drawImage(imagenes.get(Type.DERECHA), bulletX[i], bulletY[i], this);
                 
             }
             
@@ -252,14 +254,13 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public void run() {
         while(true){
             for(int i = 0; i<bulletX.length ;i++){
-                if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
+                if(/*isShot[i] && */imgActual==imagenes.get(Type.DERECHA)) 
                     bulletX[i]+=20;
                 
 
                 if(isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)) 
                     bulletX[i]-=20;
-                
-                
+
                 if(bulletX[i]> 1000 || bulletX[i]< 0){
                     isShot[i] = false;
                     bulletX[i] = posX + 20;
