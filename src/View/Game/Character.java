@@ -5,6 +5,7 @@
  */
 package View.Game;
 
+import Modelo.Disparos.Disparo;
 import Modelo.PlayerCharacter.CharacterManager;
 import PlataformShooter.Type;
 import java.awt.Graphics;
@@ -27,7 +28,7 @@ import javax.swing.Timer;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 
-public class Character extends JPanel implements ActionListener, KeyListener {
+public class Character extends JPanel implements ActionListener, KeyListener, Runnable {
     public Timer t = new Timer(50,this);
     public CharacterManager personaje;
     public Toolkit toolkit;
@@ -35,6 +36,13 @@ public class Character extends JPanel implements ActionListener, KeyListener {
     public Image imgActual;
     public int posX =30,posY=350;
     public int deltaX=0,deltaY=0;
+    public int bulletNo = 0;
+    public int bulletX[] = new int[10];
+    public int bulletY[] = new int[10];
+    public  boolean isShot[] = new boolean[10];
+    
+    Thread thread = new Thread(this);
+
     
     public Character(){
         t.start();      
@@ -53,6 +61,10 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShootR.png");
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
+        this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
+        this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
+        this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
+        this.personaje.addImg(Type.BG, "./src/img/bg.jpg");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
         this.imagenes.put(Type.DERECHA, toolkit.getImage(personaje.getImg().get(Type.DERECHA)));
@@ -66,19 +78,39 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         this.imagenes.put(Type.DISPARA_R, toolkit.getImage(personaje.getImg().get(Type.DISPARA_R)));
         this.imagenes.put(Type.DISPARA_L, toolkit.getImage(personaje.getImg().get(Type.DISPARA_L)));
         this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
-
+        this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
+        this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
+        this.imagenes.put(Type.BG, toolkit.getImage(personaje.getImg().get(Type.BG)));
+        
         
 //        this.posX = personaje.getPosicionActualX();
 //        this.posY = personaje.getPosicionActualY();
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
         this.imgActual = this.imagenes.get(Type.DERECHA);
+        
+        thread.start();
 
     }
     
     @Override
-    public void paintComponent(Graphics g){
+    public void paint(Graphics g){
         super.paintComponent(g);
+        
+        g.drawImage(imagenes.get(Type.BG),0,0,null);
+        
+        for (int i = 0; i<bulletX.length; i++){
+            if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
+                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+                
+            }
+            
+            if (isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)){
+                g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
+            }
+
+        }
+        
         g.drawImage(this.imgActual, this.posX,this.posY,this);
 
     }
@@ -115,6 +147,7 @@ public class Character extends JPanel implements ActionListener, KeyListener {
             System.out.println("Moviendo");
             deltaY = 0; 
             deltaX = 0;
+            bulletY[bulletNo] = posY;
             System.out.println("x: " + posX);
             System.out.println("y: " + posY);
             if(imgActual == imagenes.get(Type.IZQUIERDA)){
@@ -128,7 +161,7 @@ public class Character extends JPanel implements ActionListener, KeyListener {
 
                 deltaY=-10;
                 deltaX=0;
-
+                bulletY[bulletNo] = posY;
                  
                 System.out.println("x: " + posX);
                 System.out.println("y: " + posY);
@@ -142,7 +175,8 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         if (code == KeyEvent.VK_LEFT){  
             System.out.println("Moviendo");
             deltaY = 0; 
-            deltaX = -10; 
+            deltaX = -10;
+            bulletX[bulletNo] = posX;
             System.out.println("x: " + posX);
             System.out.println("y: " + posY);
             imgActual = imagenes.get(Type.CORRE_LEFT);
@@ -150,6 +184,7 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         if (code == KeyEvent.VK_RIGHT){ 
             System.out.println("Moviendo");
             deltaY = 0; deltaX = 10;
+            bulletX[bulletNo] = posX;
             System.out.println("x: " + posX);
             System.out.println("y: " + posY);
             imgActual = imagenes.get(Type.CORRE_RIGHT);
@@ -158,9 +193,19 @@ public class Character extends JPanel implements ActionListener, KeyListener {
         if (code == KeyEvent.VK_X){
             if(imgActual==imagenes.get(Type.IZQUIERDA)){
                 imgActual = imagenes.get(Type.DISPARA_L);
+                
             }else{
                 imgActual = imagenes.get(Type.DISPARA_R);
             }
+            
+            isShot[bulletNo] = true;
+            bulletX[bulletNo] = posX + 65;
+            Disparo.bulletY[bulletNo] = posY + 40;
+            ++bulletNo;
+            //System.out.println(":" + bulletNo);
+            //System.out.println(": "+ bulletX.length);
+            if(bulletNo>bulletX.length-1) 
+                bulletNo=0;
 
             System.out.println("Shoot");
         }    
@@ -196,11 +241,38 @@ public class Character extends JPanel implements ActionListener, KeyListener {
     
     public static void main(String[] args) {
         JFrame f = new JFrame(); 
-        Character p = new Character(); 
-        f.add(p); 
+        Character p = new Character();
+        f.add(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         f.setSize(1000,700); 
         f.setVisible(true); 
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            for(int i = 0; i<bulletX.length ;i++){
+                if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
+                    bulletX[i]+=20;
+                
+
+                if(isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)) 
+                    bulletX[i]-=20;
+                
+                
+                if(bulletX[i]> 1000 || bulletX[i]< 0){
+                    isShot[i] = false;
+                    bulletX[i] = posX + 20;
+                    bulletY[i] = posY + 10;
+                    
+                }
+            }
+            try{
+                Thread.sleep(20);
+            } catch (InterruptedException ex) {
+               repaint();            
+            }
+        }
     }
     
 }

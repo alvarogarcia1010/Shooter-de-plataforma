@@ -5,65 +5,75 @@
  */
 package Modelo.Disparos;
 
+
 /**
  *
  * @author daniel
  */
+import PlataformShooter.Type;
+import View.Game.Character;
+import View.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.ImageObserver;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author daniel
  */
-public class Disparo extends JFrame implements KeyListener, Runnable{
+public class Disparo extends JPanel implements Runnable, ImageObserver{
     
-    int frameW = 1000, frameM = 700;
+    //int frameW = 1000, frameM = 700;
     
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Image right = toolkit.getImage("./src/img/right.gif");
-    Image left = toolkit.getImage("./src/img/left.gif");
-    Image bg = toolkit.getImage("./src/img/bg.jpg");
-    Image bullet = toolkit.getImage("./src/img/bullet.gif");
-    Image bullet1 = toolkit.getImage("./src/img/bullet1.gif");
-    Image image = right;
-    int rightX = 200, rightY = 100;
-    int bulletNo = 0;
-    int bulletX[] = new int[10];
-    int bulletY[] = new int[10];
-    boolean isShot[] = new boolean[10];
+    public static Toolkit toolkit = Toolkit.getDefaultToolkit();
+    //Image right = toolkit.getImage("./src/img/right.gif");
+    //Image left = toolkit.getImage("./src/img/left.gif");
+    //Image bg = toolkit.getImage("./src/img/bg.jpg");
+    public static Image bullet = toolkit.getImage("./src/img/bullet.gif");
+    public static Image bullet1 = toolkit.getImage("./src/img/bullet1.gif");
+    public static Image image = bullet;
+    //int rightX = 200, rightY = 100;
+    int rightX , rightY;
+    public static int bulletNo = 0;
+    public static int bulletX[] = new int[10];
+    public static int bulletY[] = new int[10];
+    public static boolean isShot[] = new boolean[10];
     
     Thread thread = new Thread(this);
 
     
-    public Disparo(){
-        setBounds(50,50, frameW,frameM);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        addKeyListener(this);
+    public Disparo(Character c){
+        this.rightX = c.posX;
+        this.rightY = c.posY;
+        //setBounds(50,50, Play.WIDTH,Play.HEIGHT);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setVisible(true);
+        //addKeyListener(this);
         
-        for(int i = 0; i<bulletX.length ;i++){
+        /*for(int i = 0; i<bulletX.length ;i++){
             isShot[i] = false;
             bulletX[i] = rightX + 20;
             bulletY[i] = rightY + 10;
-        }
+            System.out.println("hola");
+        }*/
         thread.start();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new Disparo();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void keyTyped(KeyEvent ke) {
         
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_X){
@@ -71,8 +81,8 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
             bulletX[bulletNo] = rightX + 65;
             bulletY[bulletNo] = rightY + 40;
             ++bulletNo;
-            System.out.println(":" + bulletNo);
-            System.out.println(": "+ bulletX.length);
+            //System.out.println(":" + bulletNo);
+            //System.out.println(": "+ bulletX.length);
             if(bulletNo>bulletX.length-1) 
                 bulletNo=0;
         }
@@ -98,37 +108,40 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
             bulletX[bulletNo] = rightX;
             image = left;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void keyReleased(KeyEvent ke) {
-    }
+    }*/
     
-    @Override
+    /*@Override
     public void paint(Graphics g){
-        g.drawImage(bg, 0, 0, null);
+        //g.drawImage(bg, 0, 0, null);
         
         for (int i = 0; i<bulletX.length; i++){
-            if(isShot[i] && image == right){
+            if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)){
                 g.drawImage(bullet, bulletX[i], bulletY[i], this);
+                
             }
             
-            if (isShot[i] && image == left){
+            if (isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)){
                 g.drawImage(bullet1, bulletX[i], bulletY[i], this);
             }
+
         }
         
-        g.drawImage(image, rightX, rightY, this);
+        //g.drawImage(image, rightX, rightY, this);
     }
 
     @Override
     public void run() {
         while(true){
             for(int i = 0; i<bulletX.length ;i++){
-                if(isShot[i] && image == right) 
+                if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
                     bulletX[i]+=20;
                 
-                if(isShot[i] && image == left) 
+
+                if(isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)) 
                     bulletX[i]-=20;
                 
                 
@@ -145,6 +158,18 @@ public class Disparo extends JFrame implements KeyListener, Runnable{
                repaint();            
             }
         }
+    }
+    
+   
+
+    @Override
+    public boolean imageUpdate(Image image, int i, int i1, int i2, int i3, int i4) {
+        return true;    
+    }*/
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
