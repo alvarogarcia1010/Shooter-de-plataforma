@@ -85,6 +85,12 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         
 //        this.posX = personaje.getPosicionActualX();
 //        this.posY = personaje.getPosicionActualY();
+
+        for (int i = 0; i<bulletX.length; i++){
+            bulletX[i] = posX;
+            bulletY[i] = posY;         
+        }
+        
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
         this.imgActual = this.imagenes.get(Type.DERECHA);
@@ -97,7 +103,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public void paint(Graphics g){
         super.paintComponent(g);
         
-        g.drawImage(imagenes.get(Type.BG),0,0,null);
+//        g.drawImage(imagenes.get(Type.BG),0,0,null);
         
         for (int i = 0; i<bulletX.length; i++){
             if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
@@ -121,14 +127,14 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             deltaX=0;
             posX = 0;
         }
-        if(posX>930){
+        if(posX>950){
             deltaX=0;
-            posX=930;
+            posX=950;
         }
         
-        if(posY < 0) { 
-            deltaY=0; 
-            posY = 0; 
+        if(posY < 250) { 
+            deltaY=10; 
+            posY = 250; 
         }
         if(posY > 350) { 
             deltaY=0;
