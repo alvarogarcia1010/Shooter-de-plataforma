@@ -69,6 +69,7 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
+                p.setVisible(true);
                 dispose();  
             }
 
@@ -79,6 +80,7 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
+                p.setVisible(true);
                 dispose();  
             }
 
@@ -89,6 +91,7 @@ public class Personajes extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
+                p.setVisible(true);
                 dispose();  
             }
 
