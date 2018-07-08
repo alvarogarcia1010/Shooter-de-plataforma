@@ -26,7 +26,7 @@ public class Personajes extends JFrame{
       public static int height = 700;
       public static int width = 900;
       public JButton p1,p2,p3;
-      PanelPersonaje fondo = new PanelPersonaje();
+      public PanelPersonaje fondo = new PanelPersonaje();
       
       public Personajes(){
         super("Personajes");
