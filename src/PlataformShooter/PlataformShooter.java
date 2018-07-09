@@ -1,6 +1,6 @@
 package PlataformShooter;
 
-import Controllers.Connection.Connection;
+import Controllers.Connection;
 import View.Bienvenida;
 
 
@@ -16,9 +16,9 @@ public class PlataformShooter {
         // TODO code application logic here
                 Connection prueba = Connection.getInstance();
                 prueba.getConnection();
-//                Bienvenida p = new Bienvenida();
-//                
-//                p.setVisible(true);
+                Bienvenida p = new Bienvenida();
+                
+                p.setVisible(true);
     }
     
 }
