@@ -24,10 +24,13 @@ import javax.swing.JOptionPane;
  */
 public abstract class DaoManager<T> implements DaoManagementInterface<T> {
     protected TableData infoTabla;
-    protected String select = "SELECT * FROM " + infoTabla.TABLE_NAME;
+
     
     public DaoManager(){
 
+    }
+    public DaoManager(TableData table) {
+        this.infoTabla = table;
     }
     
     abstract T mapToObject(ResultSet resultado);
@@ -47,7 +50,7 @@ public abstract class DaoManager<T> implements DaoManagementInterface<T> {
         try{
             con = this.con.getConnection();
             Statement query = con.createStatement();
-            ResultSet resultado = query.executeQuery(select);
+            ResultSet resultado = query.executeQuery("SELECT * FROM " + infoTabla.TABLE_NAME);
             
             while(resultado.next()){
                 T row = mapToObject(resultado);
@@ -159,7 +162,10 @@ public abstract class DaoManager<T> implements DaoManagementInterface<T> {
         try{
             con = this.con.getConnection();
             Statement query = con.createStatement();
-            ResultSet resultado = query.executeQuery(PartidasDao.top10);
+            ResultSet resultado = query.executeQuery("SELECT * " +
+                                        "FROM partidas AS pa JOIN jugador AS j ON pa.fkIdJugador = j.id " +
+                                        "JOIN personaje AS p ON pa.fkIdPersonaje = p.id " +
+                                        "ORDER BY pa.puntaje DESC LIMIT 10");
             
             while(resultado.next()){
                 T row = mapToObject(resultado);
@@ -176,6 +182,24 @@ public abstract class DaoManager<T> implements DaoManagementInterface<T> {
         }
         
         return listObject;
+    }
+    
+    public int registros(){
+        Connection con = null;
+        int registros = 0;
+        try{
+            con = this.con.getConnection();
+            Statement query = con.createStatement();
+            ResultSet resultado = query.executeQuery("SELECT * FROM " + infoTabla.TABLE_NAME);
+            
+            while(resultado.next()){
+                registros++;
+            }
+            resultado.close();
+        }catch(Exception ex){
+            
+        }
+        return registros;
     }
     
     private void close(Connection con){

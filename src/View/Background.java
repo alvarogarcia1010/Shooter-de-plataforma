@@ -49,9 +49,13 @@ public class Background {
 
     public void draw(Graphics window) {
         window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
+<<<<<<< HEAD
         this.x -= 5;
         if (this.x <= -1 * image.getWidth()) {
             this.x = this.x + image.getWidth() * 2;
             }   
+=======
+        this.x -= 1;      
+>>>>>>> c5a8405ac40d1019a09206425557894131ecdae0
         }
 }

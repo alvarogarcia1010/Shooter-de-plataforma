@@ -92,9 +92,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
         this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
 
-        
-//        this.posX = personaje.getPosicionActualX();
-//        this.posY = personaje.getPosicionActualY();
+
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
         this.imgActual = this.imagenes.get(Type.MORIR);
@@ -191,7 +189,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public void shoot(){
         isShot[bulletNo] = true;
         bulletX[bulletNo] = posX + 65;
-        Disparo.bulletY[bulletNo] = posY + 40;
+        bulletY[bulletNo] = posY + 40;
         ++bulletNo;
         //System.out.println(":" + bulletNo);
         //System.out.println(": "+ bulletX.length);

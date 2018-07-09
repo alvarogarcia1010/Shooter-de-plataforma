@@ -16,7 +16,6 @@ import java.sql.ResultSet;
  */
 public class JugadorDao extends DaoManager<Jugador>{
 
-    private final String insert = "INSERT INTO " + infoTabla.TABLE_NAME + " (" + infoTabla.fields[0]+") VALUES (?)";
     
     public JugadorDao(){
         infoTabla = new TableData(
@@ -24,6 +23,7 @@ public class JugadorDao extends DaoManager<Jugador>{
                         "id",
                         new String[]{"nombre"});
     }
+    
     @Override
     Jugador mapToObject(ResultSet resultado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -38,7 +38,7 @@ public class JugadorDao extends DaoManager<Jugador>{
     PreparedStatement getInsertStatement(Connection con, Jugador _new) {
         PreparedStatement preparedStatement= null;
         try{
-            preparedStatement = con.prepareStatement(insert);
+            preparedStatement = con.prepareStatement("INSERT INTO " + infoTabla.TABLE_NAME + " (" + infoTabla.fields[0]+") VALUES (?)");
             
             preparedStatement.setString(1,_new.getNombre());
         }catch(Exception ex){

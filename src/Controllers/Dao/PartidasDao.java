@@ -17,19 +17,13 @@ import java.util.ArrayList;
  */
 public class PartidasDao extends DaoManager<Partida>{
 
-    private final String insert = "INSERT INTO " + infoTabla.TABLE_NAME + " (" + infoTabla.fields[0]+", " 
-                                                                               + infoTabla.fields[0]+", "
-                                                                               + infoTabla.fields[0]+", "
-                                                                               + infoTabla.fields[0]+") VALUES (?.?,?,?)";
-    public static final String top10 = "SELECT * " +
-                                        "FROM partidas AS pa JOIN jugador AS j ON pa.fkIdJugador = j.id " +
-                                        "JOIN personaje AS p ON pa.fkIdPersonaje = p.id " +
-                                        "ORDER BY pa.puntaje DESC LIMIT 10";
+
+
     public PartidasDao(){
         infoTabla = new TableData(
                         "partidas",
                         "id",
-                        new String[]{"fkIdPartida","fkIdPersonaje", "puntaje","tiempo"});
+                        new String[]{"fkIdJugador","fkIdPersonaje", "puntaje","tiempo"});
     }
     
     @Override
@@ -46,7 +40,10 @@ public class PartidasDao extends DaoManager<Partida>{
     PreparedStatement getInsertStatement(Connection con, Partida _new) {
         PreparedStatement preparedStatement= null;
         try{
-            preparedStatement = con.prepareStatement(insert);
+            preparedStatement = con.prepareStatement("INSERT INTO " + infoTabla.TABLE_NAME + " (" + infoTabla.fields[0] +", " 
+                                                                               + infoTabla.fields[1]+", "
+                                                                               + infoTabla.fields[2]+", "
+                                                                               + infoTabla.fields[3]+") VALUES (?,?,?,?)");
             
             preparedStatement.setInt(1,_new.getJugador());
             preparedStatement.setInt(2,_new.getPersonaje());
