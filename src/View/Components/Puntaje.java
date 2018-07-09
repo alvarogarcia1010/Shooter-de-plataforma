@@ -23,6 +23,7 @@ public class Puntaje {
     
     
     public void initPuntajeComponents(){
+
         //Etiqueta nombre
         Play.nombreJugador = new JLabel(Bienvenida.usuario);
         Play.nombreJugador.setFont(Play.fuenteSecundaria);
@@ -44,7 +45,7 @@ public class Puntaje {
         Play.etiquetaVida.setBounds(25, 600, 150, 30);
         
         //Vida
-        Play.vida = new JLabel("100");
+        Play.vida = new JLabel("1000");
         Play.vida.setFont(Play.fuenteSecundaria);
         Play.vida.setForeground(Color.BLACK);
 //        Play.vida.setOpaque(true);
@@ -116,7 +117,7 @@ public class Puntaje {
             partida.setTiempo(Play.labelTimer.getText());
             
             partidaDao.insert(partida);
-            
+
         }
     }
 }
