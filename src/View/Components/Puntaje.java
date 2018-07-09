@@ -5,6 +5,11 @@
  */
 package View.Components;
 
+import Controllers.Dao.JugadorDao;
+import Controllers.Dao.PartidasDao;
+import Modelo.Jugador.Jugador;
+import Modelo.Jugador.Partida;
+import View.Bienvenida;
 import View.Play;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -19,7 +24,7 @@ public class Puntaje {
     
     public void initPuntajeComponents(){
         //Etiqueta nombre
-        Play.nombreJugador = new JLabel("Alvarito");
+        Play.nombreJugador = new JLabel(Bienvenida.usuario);
         Play.nombreJugador.setFont(Play.fuenteSecundaria);
         Play.nombreJugador.setForeground(Color.BLACK);
 //        Play.labelTimer.setOpaque(true);
@@ -78,7 +83,7 @@ public class Puntaje {
     }
     
     public void restarVida(){
-        String msj = "Juego Terminado \n Puntuación: "+ Play.puntaje.getText() + "\nTiempo: "+ Play.labelTimer.getText();
+        String msj = "Juego Terminado \nPuntuación: "+ Play.puntaje.getText() + "\nTiempo: "+ Play.labelTimer.getText();
         try{
             int temp = Integer.parseInt(Play.vida.getText());
             verificarVida(temp,msj);
@@ -99,9 +104,19 @@ public class Puntaje {
     }
     
     public void verificarVida(int temp, String msj){
-        if(temp <10){
+        if(temp <1){
             JOptionPane.showMessageDialog(null,msj);
-
+            PartidasDao partidaDao = new PartidasDao();
+            Partida partida = new Partida();
+            JugadorDao jugador = new JugadorDao();
+            
+            partida.setJugador(jugador.registros());
+            partida.setPersonaje(1);
+            partida.setPuntaje(Integer.parseInt(Play.puntaje.getText()));
+            partida.setTiempo(Play.labelTimer.getText());
+            
+            partidaDao.insert(partida);
+            
         }
     }
 }

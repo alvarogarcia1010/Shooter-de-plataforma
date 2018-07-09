@@ -14,6 +14,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +28,8 @@ public class Ranking extends JFrame{
     public static int width = 900;
     PanelRanking fondo = new PanelRanking();
     JButton regresar = new JButton();
+    JTable top = new JTable();
+    DefaultTableModel tm;
     
     public Ranking(){
         super("Ranking");
@@ -33,16 +38,18 @@ public class Ranking extends JFrame{
         setSize(width,height);
         setLocationRelativeTo(null);
         add(fondo);
+        llenarTabla();
         setVisible(true);
       }
       
     public void initialcomponents(){
         regresar = new JButton(new ImageIcon("regresar.png"));
         regresar.setBounds(20, 5, 50, 50);
+        top.setBounds(190,130,500,400);
         
         Container container = getContentPane();
         container.add(regresar);
-        
+        container.add(top);
         regresar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -52,6 +59,33 @@ public class Ranking extends JFrame{
                 dispose();  
             }
         });
+    }
+    
+    public void llenarTabla(){
+        tm = new DefaultTableModel(){
+            public Class<?> getColumnClass(int column){
+                switch (column){
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return Integer.class;
+                    case 3:
+                        return Integer.class;
+                    default:
+                        return Boolean.class;
+                }
+            }  
+            
+        };
+        
+        tm.addColumn("Nombre");
+        tm.addColumn("Personaje");
+        tm.addColumn("Puntuacion");
+        tm.addColumn("Tiempo");
+        
+        top.setModel(tm);
     }
     
     private class PanelRanking extends JPanel{

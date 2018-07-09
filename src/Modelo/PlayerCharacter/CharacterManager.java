@@ -9,8 +9,8 @@ import java.util.HashMap;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 
-public class CharacterManager extends Thread{
-    
+public class CharacterManager{
+    protected int id;
     protected String Nombre;
     protected int vida;
     protected HashMap<Type,String> img;
@@ -32,6 +32,15 @@ public class CharacterManager extends Thread{
 
     public CharacterManager() {
         this.img = new HashMap<>();
+    }
+
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public void addImg(Type claveImg, String url) {

@@ -1,5 +1,5 @@
 
-package Controllers.Connection;
+package Controllers;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
