@@ -42,9 +42,8 @@ public class Tiempo{
         Play.labelTimer.setVerticalAlignment(JLabel.CENTER);
         Play.labelTimer.setBounds(425, 10, 150, 50);
         
-        //Boton Inventario de Armas
-        Play.inventario = new JButton("Elegir arma");
-        Play.inventario.setBounds(850, 20, 125, 30);
+       
+        
        // Boton Pausa
         Play.btnPause = new JButton("SUMAR PUNTAJE");
         Play.btnPause.setFont(Play.fuente);

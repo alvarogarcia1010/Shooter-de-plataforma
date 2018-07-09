@@ -25,7 +25,7 @@ public class Personajes extends JFrame{
     
       public static int height = 700;
       public static int width = 900;
-      public JButton p1,p2,p3;
+      public JButton p1,p2,p3,inventario;
       public PanelPersonaje fondo = new PanelPersonaje();
       
       public Personajes(){
@@ -59,10 +59,14 @@ public class Personajes extends JFrame{
           p3.setContentAreaFilled(false);
           p3.setBorderPainted(false);
           
+          inventario = new JButton("Elegir arma");
+          inventario.setBounds(320, 570, 300, 50);
+          
           Container container = getContentPane();
           container.add(p1);
           container.add(p2);
           container.add(p3);
+          container.add(inventario);
           
                     
         p1.addActionListener(new ActionListener() {
@@ -96,6 +100,17 @@ public class Personajes extends JFrame{
             }
 
         });
+        
+        inventario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Inventario i = new Inventario();
+                i.setVisible(true);
+
+            }
+
+        });
+        
       }
          
        public static void main(String[] args){

@@ -28,7 +28,7 @@ import View.Game.Character;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 public class Play extends JFrame {
-    public int x;
+    public static int x = 1;
     public static Font fuente = new Font("Comic Sans MS", 3, 30);
     public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 837; //700
@@ -36,7 +36,7 @@ public class Play extends JFrame {
 
     public static Character c;
 
-    public static JButton encender, apagar, inventario;
+    public static JButton encender, apagar;
     //public AudioStream audio1;
 
     //Controladores de los componentes
@@ -91,7 +91,7 @@ public class Play extends JFrame {
         Container container = getContentPane();
 //        container.add(encender);
 //        container.add(apagar);
-        container.add(this.inventario);
+        
         container.add(this.labelTimer);
         container.add(this.etiquetaPuntaje);
         container.add(this.nombreJugador);
@@ -131,15 +131,7 @@ public class Play extends JFrame {
 //
 //        });
 //        
-        inventario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Inventario i = new Inventario();
-                i.setVisible(true);
-
-            }
-
-        });
+        
     }
     /*private void musica(){
     

@@ -49,12 +49,12 @@ public class Bienvenida extends JFrame{
       public void initialComponent(){
           //Bienvenida b = new Bienvenida();
 
-          bienvenida = new JButton(new ImageIcon("./src/img/welcome.png"));
-          bienvenida.setBounds(800,300,120,50);   
+          bienvenida = new JButton(new ImageIcon("./src/img/inicio.png"));
+          bienvenida.setBounds(750,300,186,60);   
           about = new JButton(new ImageIcon("about.png"));
-          about.setBounds(800, 400, 120, 50);
-          rank = new JButton(new ImageIcon("rank.png"));
-          rank.setBounds(800, 200, 120, 50);
+          about.setBounds(800, 400, 135, 53);
+          rank = new JButton(new ImageIcon("top.png"));
+          rank.setBounds(750, 200, 187, 60);
           
           
           
