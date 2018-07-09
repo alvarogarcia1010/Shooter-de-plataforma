@@ -40,13 +40,10 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public int bulletNo = 0;
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
-<<<<<<< HEAD
     public  boolean isShot[] = new boolean[10];
     Play p =  new Play();
-=======
-    public boolean isShot[] = new boolean[10];
     
->>>>>>> c5a8405ac40d1019a09206425557894131ecdae0
+
     Thread thread = new Thread(this);
 
     
@@ -68,21 +65,10 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
-        switch(p.x){
-            case 1:
-                this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
-                this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
-                break;
-            case 2:
-                this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
-                this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
-                break;
-            case 3:
-                this.personaje.addImg(Type.BALADER, "./src/img/Misil.gif");
-                this.personaje.addImg(Type.BALAIZQ, "./src/img/Misil1.gif");
-                break;
-        }
-        
+
+        this.personaje.addImg(Type.BALADER, "./src/img/Misil.gif");
+        this.personaje.addImg(Type.BALAIZQ, "./src/img/Misil1.gif");
+
         
         
         this.personaje.addImg(Type.BG, "./src/img/bg.jpg");

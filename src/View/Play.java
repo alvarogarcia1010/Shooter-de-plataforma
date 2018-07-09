@@ -33,11 +33,8 @@ public class Play extends JFrame {
     public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 837; //700
     public static int width = 1000; //1000
-<<<<<<< HEAD
-=======
+
     public static Character c;
-    
->>>>>>> c5a8405ac40d1019a09206425557894131ecdae0
 
     public static JButton encender, apagar, inventario;
     //public AudioStream audio1;
@@ -170,7 +167,6 @@ public class Play extends JFrame {
             private Background backOne;
             private Background backTwo;
             private BufferedImage back;
-            private Character p;
             
             public ScrollingBackground() {
                 backOne = new Background();
