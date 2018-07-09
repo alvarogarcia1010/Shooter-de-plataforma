@@ -19,9 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import View.Game.Character;
+import View.Game.Enemy;
 
 /**
  *
@@ -36,8 +35,15 @@ public class Play extends JFrame {
 
     public static Character c;
 
-    public static JButton encender, apagar;
+
     //public AudioStream audio1;
+
+    public static Enemy e,e1;
+    public static Musica m = new Musica();
+
+
+    
+
 
     //Controladores de los componentes
     public static Tiempo cronometro = new Tiempo();
@@ -48,6 +54,7 @@ public class Play extends JFrame {
     public static JLabel etiquetaPuntaje, nombreJugador, puntaje, etiquetaVida,vida;
     public static JLabel labelTimer;
     public static JButton btnPause;
+
 
     public Play() {
         super("Shooter");
@@ -61,14 +68,13 @@ public class Play extends JFrame {
         back.setFocusable(true);
         add(back);
         
-        //musica();
-        //stop();
     }
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //m.musica();
                 Play p = new Play();
                 p.setVisible(true);
             }
@@ -78,20 +84,12 @@ public class Play extends JFrame {
     }
 
     public void initialComponent() {
-//        encender = new JButton(new ImageIcon("encendido.png"));
-//        encender.setBounds(820, 500, 50, 50);
-//        apagar = new JButton(new ImageIcon("apagar.png"));
-//        apagar.setBounds(880,500,50,50);
         c = new Character();
-        
-
+        e = new Enemy();
+        e1 = new Enemy();
         this.cronometro.initlabelTimer();
         this.puntuacion.initPuntajeComponents();
-
         Container container = getContentPane();
-//        container.add(encender);
-//        container.add(apagar);
-        
         container.add(this.labelTimer);
         container.add(this.etiquetaPuntaje);
         container.add(this.nombreJugador);
@@ -100,6 +98,8 @@ public class Play extends JFrame {
         container.add(this.etiquetaVida);
         container.add(this.btnPause);
         container.add(c);
+        container.add(e);
+        container.add(e1);
     }
 
     public void initGame() {
@@ -114,46 +114,9 @@ public class Play extends JFrame {
 //                puntuacion.sumarPuntos();
                   puntuacion.restarVida();
             }
-        });
-//        encender.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent ae) {
-//                //musica();
-//            }
-//
-//        });
-//        
-//        apagar.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent ae) {
-//                //stop();
-//            }
-//
-//        });
-//        
-        
-    }
-    /*private void musica(){
-    
-        try{
-            String sonido1 = "Music\\\\\\\\Solarstone & Clare Stagg - Jewel (Pure Mix) [Music Video] [HD].wav";
-            InputStream in = new FileInputStream(sonido1);
-            audio1 = new AudioStream(in);
-            AudioPlayer.player.start(audio1);
-            
-            
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }
 
-    private void stop(){
-        try{
-            AudioPlayer.player.stop(audio1);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }*/
+        });
+    }
     
     public class ScrollingBackground extends JPanel implements Runnable{
             private Background backOne;
@@ -179,7 +142,6 @@ public class Play extends JFrame {
                     }
                 }
                 catch (Exception e) {}
-
             }
 
             @Override
@@ -197,6 +159,9 @@ public class Play extends JFrame {
                 
                 twoD.drawImage(back, null, 0, 0);
                 c.paintComponent(window);
+                e.paintComponent(window);
+                e1.paintComponent(window);
+
      
             }
     }

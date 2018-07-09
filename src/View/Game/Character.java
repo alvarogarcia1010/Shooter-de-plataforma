@@ -265,14 +265,14 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public void keyTyped(KeyEvent e) {
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         JFrame f = new JFrame(); 
         Character p = new Character();
         f.add(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.setSize(1000,700); 
-        f.setVisible(true); 
-    }
+        //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        //f.setSize(1000,700); 
+        //f.setVisible(true); 
+    }*/
 
     @Override
     public void run() {
