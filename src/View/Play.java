@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 public class Play extends JFrame {
-    public int x;
+    public static int x = 1;
     public static Font fuente = new Font("Comic Sans MS", 3, 30);
     public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 837; //700
@@ -36,12 +36,17 @@ public class Play extends JFrame {
 
     public static Character c;
 
+
+    //public AudioStream audio1;
+
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+
     public static Enemy e,e1;
     public static Musica m = new Musica();
 
 
-    public static JButton encender, apagar, inventario;
+    
+
 
     //Controladores de los componentes
     public static Tiempo cronometro = new Tiempo();
@@ -90,7 +95,6 @@ public class Play extends JFrame {
         this.cronometro.initlabelTimer();
         this.puntuacion.initPuntajeComponents();
         Container container = getContentPane();
-        container.add(this.inventario);
         container.add(this.labelTimer);
         container.add(this.etiquetaPuntaje);
         container.add(this.nombreJugador);
@@ -115,23 +119,15 @@ public class Play extends JFrame {
 //                puntuacion.sumarPuntos();
                   puntuacion.restarVida();
             }
-        });
-        
-        inventario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Inventario i = new Inventario();
-                i.setVisible(true);
-
-            }
 
         });
     }
+
+
     
     public ArrayList<Enemy> getEnemies(){
         return enemies;
     }
-
     
     public class ScrollingBackground extends JPanel implements Runnable{
             private Background backOne;

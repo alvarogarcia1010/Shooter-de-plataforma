@@ -37,13 +37,13 @@ public class Inventario extends JFrame{
     
     public void initialComponent(){
         b1 = new JButton("Bala Comun");
-        b1.setBounds(100,50,120,50);
+        b1.setBounds(150,50,120,50);
         
         b2 = new JButton("Bala Pesada");
-        b2.setBounds(100,100,120,50); 
+        b2.setBounds(150,150,120,50); 
         
         b3 = new JButton("Misil");
-        b3.setBounds(100,150,120,50);   
+        b3.setBounds(150,250,120,50);   
         
          Container container = getContentPane();
          container.add(b1);
@@ -53,24 +53,21 @@ public class Inventario extends JFrame{
          b1.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Play p = new Play();
-                p.x = 1;
+                Play.x = 1;
             }
           });
          
          b2.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Play p = new Play();
-                p.x = 2;
+                Play.x = 2;
             }
           });
          
          b3.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Play p = new Play();
-                p.x = 3;
+                Play.x = 3;
             }
           });
     }
