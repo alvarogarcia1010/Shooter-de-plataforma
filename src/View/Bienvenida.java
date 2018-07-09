@@ -50,8 +50,7 @@ public class Bienvenida extends JFrame{
           bienvenida.setBounds(800,300,120,50);   
           about = new JButton(new ImageIcon("about.png"));
           about.setBounds(800, 400, 120, 50);
-          rank = new JButton(new ImageIcon("rank.png"))
-                  ;
+          rank = new JButton(new ImageIcon("rank.png"));
           rank.setBounds(800, 200, 120, 50);
           
           

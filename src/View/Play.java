@@ -27,12 +27,11 @@ import sun.audio.AudioStream;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 public class Play extends JFrame {
-
+    public int x;
     public static Font fuente = new Font("Comic Sans MS", 3, 30);
     public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 837; //700
     public static int width = 1000; //1000
-    
 
     public static JButton encender, apagar, inventario;
     //public AudioStream audio1;
@@ -163,11 +162,13 @@ public class Play extends JFrame {
     
     public class ScrollingBackground extends JPanel implements Runnable{
             private Background backOne;
+            private Background backTwo;
             private BufferedImage back;
             private Character p;
             
             public ScrollingBackground() {
                 backOne = new Background();
+                backTwo = new Background(backOne.getImageWidth(), 0);
                 new Thread(this).start();
                 setOpaque(false);
                 
@@ -177,7 +178,7 @@ public class Play extends JFrame {
             public void run() {
 
                 try {
-                    for(int i=0;i < 4250;i++) {
+                    while(true) {
                         Thread.currentThread().sleep(15);
                         repaint();
                         //System.out.println("backOne X: "+backOne.getX()+" i: "+i);
@@ -198,7 +199,8 @@ public class Play extends JFrame {
                 if (back == null)
                     back = (BufferedImage)(createImage(getWidth(), getHeight()));
                 Graphics buffer = back.createGraphics();
-                backOne.draw(buffer);
+                backOne.draw(buffer);backTwo.draw(buffer);
+                
                 twoD.drawImage(back, null, 0, 0);
      
             }

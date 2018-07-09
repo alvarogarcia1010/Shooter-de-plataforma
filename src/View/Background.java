@@ -41,7 +41,7 @@ public class Background {
         this.x = x;
         this.y = y;
         try {
-            image = ImageIO.read(new File("nivel.png"));
+            image = ImageIO.read(new File("nivel2.png"));
         }
         catch (Exception e) { System.out.println(e); }
  
@@ -49,6 +49,9 @@ public class Background {
 
     public void draw(Graphics window) {
         window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
-        this.x -= 3;      
+        this.x -= 5;
+        if (this.x <= -1 * image.getWidth()) {
+            this.x = this.x + image.getWidth() * 2;
+            }   
         }
 }
