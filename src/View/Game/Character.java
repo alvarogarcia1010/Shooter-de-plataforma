@@ -41,7 +41,6 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
     public  boolean isShot[] = new boolean[10];
-    Play p =  new Play();
     
 
     Thread thread = new Thread(this);
@@ -66,8 +65,8 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
 
-        this.personaje.addImg(Type.BALADER, "./src/img/Misil.gif");
-        this.personaje.addImg(Type.BALAIZQ, "./src/img/Misil1.gif");
+        this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
+        this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
 
         
         

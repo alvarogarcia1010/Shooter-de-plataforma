@@ -49,7 +49,7 @@ public class Background {
 
     public void draw(Graphics window) {
          window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
-        this.x -= 5;
+        this.x -= 3;
         if (this.x <= -1 * image.getWidth()) {
             this.x = this.x + image.getWidth() * 2;
         }
