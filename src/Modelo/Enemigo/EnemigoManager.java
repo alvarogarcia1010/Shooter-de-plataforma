@@ -5,30 +5,35 @@
  */
 package Modelo.Enemigo;
 
+import PlataformShooter.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author ryane
  */
-public class EnemigoManager extends Thread{
+public class EnemigoManager{
+    protected int id;
     protected String Nombre;
     protected int vida;
     protected int Danio;
-    protected ArrayList<String> Posiciones;
+    protected HashMap<Type,String> img;
     protected int PosicionActualX;
     protected int PosicionActualY;
 
-    public EnemigoManager(String Nombre, int vida, int Danio, ArrayList<String> Posiciones, int PosicionActualX, int PosicionActualY) {
+    public EnemigoManager(String Nombre, int vida, int Danio, int PosicionActualX, int PosicionActualY) {
         this.Nombre = Nombre;
         this.vida = vida;
         this.Danio = Danio;
-        this.Posiciones = Posiciones;
+
         this.PosicionActualX = PosicionActualX;
         this.PosicionActualY = PosicionActualY;
+        this.img = new HashMap<>();
     }
 
     public EnemigoManager() {
+        this.img = new HashMap<>();
     }
 
     public String getNombre() {
@@ -41,10 +46,6 @@ public class EnemigoManager extends Thread{
 
     public int getDanio() {
         return Danio;
-    }
-
-    public ArrayList<String> getPosiciones() {
-        return Posiciones;
     }
 
     public int getPosicionActualX() {
@@ -67,10 +68,6 @@ public class EnemigoManager extends Thread{
         this.Danio = Danio;
     }
 
-    public void setPosiciones(ArrayList<String> Posiciones) {
-        this.Posiciones = Posiciones;
-    }
-
     public void setPosicionActualX(int PosicionActualX) {
         this.PosicionActualX = PosicionActualX;
     }
@@ -78,6 +75,24 @@ public class EnemigoManager extends Thread{
     public void setPosicionActualY(int PosicionActualY) {
         this.PosicionActualY = PosicionActualY;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public HashMap<Type, String> getImg() {
+        return img;
+    }
+
+    public void setImg(HashMap<Type, String> img) {
+        this.img = img;
+    }
+    
+    
     
     
 }
