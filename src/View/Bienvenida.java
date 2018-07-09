@@ -5,6 +5,8 @@
  */
 package View;
 
+import Controllers.Dao.JugadorDao;
+import Modelo.Jugador.Jugador;
 import static View.Play.height;
 import static View.Play.width;
 import java.awt.BorderLayout;
@@ -26,6 +28,7 @@ import javax.swing.JPanel;
 public class Bienvenida extends JFrame{
       public static int height = 700;
       public static int width = 1000;
+      public static String usuario = "Default";
       private JButton bienvenida;
       private JButton about;
       private JButton rank;
@@ -106,8 +109,11 @@ public class Bienvenida extends JFrame{
     }
        
        public void usuario(){
-           String usuario = JOptionPane.showInputDialog(null, "Usuario");
-           String password = JOptionPane.showInputDialog(null, "Contraseña");
+           usuario = JOptionPane.showInputDialog(null, "Usuario");
+           JugadorDao jugadorDao= new JugadorDao();
+           Jugador jugador = new Jugador();
+           jugador.setNombre(usuario);
+           jugadorDao.insert(jugador);
        }
        
     private class PanelBienvenido extends JPanel{
