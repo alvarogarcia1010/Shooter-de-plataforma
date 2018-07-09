@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import View.Game.Character;
 import View.Game.Enemy;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,6 +38,8 @@ public class Play extends JFrame {
 
 
     //public AudioStream audio1;
+
+    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     public static Enemy e,e1;
     public static Musica m = new Musica();
@@ -87,6 +90,8 @@ public class Play extends JFrame {
         c = new Character();
         e = new Enemy();
         e1 = new Enemy();
+        enemies.add(e);
+        enemies.add(e1);
         this.cronometro.initlabelTimer();
         this.puntuacion.initPuntajeComponents();
         Container container = getContentPane();
@@ -116,6 +121,12 @@ public class Play extends JFrame {
             }
 
         });
+    }
+
+
+    
+    public ArrayList<Enemy> getEnemies(){
+        return enemies;
     }
     
     public class ScrollingBackground extends JPanel implements Runnable{
@@ -160,9 +171,7 @@ public class Play extends JFrame {
                 twoD.drawImage(back, null, 0, 0);
                 c.paintComponent(window);
                 e.paintComponent(window);
-                e1.paintComponent(window);
-
-     
+                e1.paintComponent(window);   
             }
     }
 }

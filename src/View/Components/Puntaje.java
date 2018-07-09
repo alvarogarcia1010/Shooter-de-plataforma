@@ -89,7 +89,7 @@ public class Puntaje {
             verificarVida(temp,msj);
 
             if(temp>=1){
-                temp-=10;
+                temp-=1;
                 Play.vida.setText(""+ temp);
             }
             if(temp < 1){

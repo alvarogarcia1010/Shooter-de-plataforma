@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package View.Game;
 
 import Modelo.Disparos.Disparo;
 import Modelo.PlayerCharacter.CharacterManager;
 import PlataformShooter.Type;
 import View.Game.Enemy.Actions;
+import View.Play;
 import java.awt.Graphics;
 import java.awt.Image;
 import static java.awt.Image.SCALE_AREA_AVERAGING;
@@ -17,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,13 +30,18 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Arrays;
 
+
+
 /**
  *
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 
+
+
 public class Enemy extends JPanel implements ActionListener, Runnable{
     public Timer t = new Timer(50,this);
+    public Hitbox hitboxEnemy;
     public CharacterManager personaje;
     public Actions status;
     public Toolkit toolkit;
@@ -49,9 +57,13 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
     public  boolean isShot[] = new boolean[10];
-    
+    public boolean collision = false;
+    public ArrayList<Hitbox> hitboxes = new ArrayList<Hitbox>();
+    public Hitbox hitbox;
+    public Hitbox auxHit;
+
     Thread thread = new Thread(this);
-    
+
     public static Actions randomAction() {
         if(RANDOM.nextInt(100) <= 50){
             return VALUES.get(0);
@@ -66,13 +78,10 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
             //return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
-
-    
     public Enemy(){
         t.start();      
         setFocusable(true); 
         this.personaje = new CharacterManager();
-        
         this.personaje.addImg(Type.IZQUIERDA, "./src/img/Marco/MarcoLeft.png");
         this.personaje.addImg(Type.CORRE_RIGHT, "./src/img/Marco/MarcoRuning.gif");
         this.personaje.addImg(Type.CORRE_LEFT, "./src/img/Marco/MarcoRuningL.gif");
@@ -80,7 +89,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
         this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
-        this.personaje.addImg(Type.MORIR, "./src/img/Boos/Boss4.gif");
+        this.personaje.addImg(Type.ENEMY, "./src/img/Boos/Boss1.gif");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
         this.imagenes.put(Type.IZQUIERDA, toolkit.getImage(personaje.getImg().get(Type.IZQUIERDA)));
@@ -90,68 +99,87 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.imagenes.put(Type.DISPARA_L, toolkit.getImage(personaje.getImg().get(Type.DISPARA_L)));
         this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
-        this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
+        this.imagenes.put(Type.ENEMY, toolkit.getImage(personaje.getImg().get(Type.ENEMY)));
+//        this.posX = personaje.getPosicionActualX();
 
-
+//        this.posY = personaje.getPosicionActualY();
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
-        this.imgActual = this.imagenes.get(Type.MORIR);
+        this.imgActual = this.imagenes.get(Type.ENEMY);
+        this.hitbox = new Hitbox(posX, posY, 320, 320);
         setStatus(status.WALK);
+
         
-        for (int i = 0; i<bulletX.length; i++){
+
+        for (int i = 0; i < bulletX.length; i++){
             bulletX[i] = posX - 30;
-            bulletY[i] = posY + 60;         
+            bulletY[i] = posY + 120;         
+
         }
-        
         thread.start();
         //updatedAt = System.currentTimeMillis();
     }
     
+    public ArrayList<Hitbox> getHitboxes(){
+        return hitboxes;
+    }
+
+    
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (int i = 0; i<bulletX.length; i++){
+        for (int i = 0; i < bulletX.length; i++){
             if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
-                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);    
+                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
             }
-           
-            if (isShot[i] && imgActual==imagenes.get(Type.MORIR)){
+      
+            if (isShot[i] && imgActual==imagenes.get(Type.ENEMY)){
                 g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
             }
         }
-        g.drawImage(this.imgActual, this.posX,this.posY,this);
-
+        g.drawImage(this.imgActual, this.posX, this.posY, this);
     }
     
+
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
+        collision();
        // if(System.currentTimeMillis() - updatedAt > 3000){           
+
             switch(status){
                 case WALK:
-                    this.imgActual = this.imagenes.get(Type.MORIR);
+                    this.imgActual = this.imagenes.get(Type.ENEMY);
                     posX = posX - 1;
+                    hitbox.setX(posX);
                     System.out.println("Camina");
                     //updatedAt = System.currentTimeMillis();
                     break;
+
                 case STOP:
-                    this.imgActual = this.imagenes.get(Type.MORIR);
+                    this.imgActual = this.imagenes.get(Type.ENEMY);
                     System.out.println("Stop");
                     status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
                     break;
+
                 case SHOOT:
                     shoot();
                     System.out.println("Shoot");
                     //updatedAt = System.currentTimeMillis();
                     break;
+
                 case JUMP:
                     System.out.println("Jump");
                     status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
                     break;
             }
-            if(System.currentTimeMillis() - updatedAt > 3000){
+
+            if(System.currentTimeMillis() - updatedAt > 1000){
                 status = randomAction();
                 updatedAt = System.currentTimeMillis();
             }
@@ -160,60 +188,72 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         //}
     }
     
+    
+
     public void setPosX(int posX){
         this.posX = posX;
     }
+
     
+
     public enum Actions{
         WALK, STOP, SHOOT, JUMP;
     }
+
     
+
     public void setStatus(Actions action){
         this.status = action;
     }
+
     
+
     public Actions getStatus(){
         return status;
     }
     
-    public static void main(String[] args) {
-        JFrame f = new JFrame(); 
-        Enemy p = new Enemy();
-        p.setPosX(900);
-        f.add(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.setSize(1000,700); 
-        f.setVisible(true); 
+    
+    public void collision(){
+        for(Hitbox hit : Play.c.getHitboxes()){
+                if(hitbox.bounds().intersects(hit.bounds())){
+                    auxHit = hit;
+                    Play.puntuacion.sumarPuntos();
+                    System.out.println("Headshot!");
+                }
+            }
+            Play.c.getHitboxes().remove(auxHit);
     }
     
+    
+
     public void shoot(){
         isShot[bulletNo] = true;
-        bulletX[bulletNo] = posX + 65;
-        bulletY[bulletNo] = posY + 40;
+        bulletX[bulletNo] = posX + 30;
+        bulletY[bulletNo] = posY + 220;
         ++bulletNo;
         //System.out.println(":" + bulletNo);
         //System.out.println(": "+ bulletX.length);
-        if(bulletNo>bulletX.length-1) 
+        if(bulletNo>bulletX.length-1);
         bulletNo=0;
     }
+
     
+
     @Override
     public void run() {
         while(true){
             for(int i = 0; i<bulletX.length ;i++){
                 if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
                     bulletX[i]+=20;
-                
 
-                if(isShot[i] && imgActual==imagenes.get(Type.MORIR)) 
+                if(isShot[i] && imgActual==imagenes.get(Type.ENEMY)) 
+
                     bulletX[i]-=20;
-                
                 
                 if(bulletX[i]> 1000 || bulletX[i]< 0){
                     isShot[i] = false;
                     bulletX[i] = posX + 20;
-                    bulletY[i] = posY + 10;
-                    
+                    bulletY[i] = posY + 10;              
                 }
             }
             try{
