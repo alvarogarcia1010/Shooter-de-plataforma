@@ -34,7 +34,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public Toolkit toolkit;
     public HashMap<Type, Image> imagenes;
     public Image imgActual;
-    public int posX =30,posY=350;
+    public int posX =30,posY=440;
     public int deltaX=0,deltaY=0;
     public int bulletNo = 0;
     public int bulletX[] = new int[10];
@@ -82,9 +82,6 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
         this.imagenes.put(Type.BG, toolkit.getImage(personaje.getImg().get(Type.BG)));
         
-        
-//        this.posX = personaje.getPosicionActualX();
-//        this.posY = personaje.getPosicionActualY();
 
         for (int i = 0; i<bulletX.length; i++){
             bulletX[i] = posX;
@@ -96,21 +93,22 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.imgActual = this.imagenes.get(Type.DERECHA);
         
         thread.start();
+ 
 
     }
     
     @Override
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
         super.paintComponent(g);
-        
-//        g.drawImage(imagenes.get(Type.BG),0,0,null);
-        
-        
-        isShot [0] = true;
-        for (int i = 0; i<bulletX.length; i++){
-            if(isShot[0] && imgActual== imagenes.get(Type.DERECHA)){
-                g.drawImage(imagenes.get(Type.DERECHA), bulletX[i], bulletY[i], this);
+
+        //g.drawImage(imagenes.get(Type.BG),0,0,null);
+        //g.drawImage(imagenes.get(Type.IZQUIERDA), 400,360,this);
+
                 
+        for (int i = 0; i<bulletX.length; i++){
+            if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
+                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+
             }
             
             if (isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)){
@@ -134,13 +132,13 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             posX=950;
         }
         
-        if(posY < 250) { 
+        if(posY < 450) { 
             deltaY=10; 
-            posY = 250; 
+            posY = 450; 
         }
-        if(posY > 350) { 
+        if(posY > 550) { 
             deltaY=0;
-            posY = 350; 
+            posY = 550; 
         } 
         posX += deltaX; 
         posY += deltaY;
@@ -152,6 +150,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode(); 
         if (code == KeyEvent.VK_DOWN){
+            System.out.println("DOWN");
             System.out.println("Moviendo");
             deltaY = 0; 
             deltaX = 0;
@@ -166,6 +165,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         } 
         if (code == KeyEvent.VK_UP){ 
               System.out.println("Moviendo");
+              System.out.println("UP");
 
                 deltaY=-10;
                 deltaX=0;
@@ -182,6 +182,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         
         if (code == KeyEvent.VK_LEFT){  
             System.out.println("Moviendo");
+            System.out.println("LEFT");
             deltaY = 0; 
             deltaX = -10;
             bulletX[bulletNo] = posX;
@@ -191,6 +192,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         } 
         if (code == KeyEvent.VK_RIGHT){ 
             System.out.println("Moviendo");
+            System.out.println("RIGHT");
             deltaY = 0; deltaX = 10;
             bulletX[bulletNo] = posX;
             System.out.println("x: " + posX);
@@ -207,8 +209,8 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             }
             
             isShot[bulletNo] = true;
-            bulletX[bulletNo] = posX + 65;
-            Disparo.bulletY[bulletNo] = posY + 40;
+            bulletX[bulletNo] = posX + 30;
+            bulletY[bulletNo] = posY + 20;
             ++bulletNo;
             //System.out.println(":" + bulletNo);
             //System.out.println(": "+ bulletX.length);
@@ -227,7 +229,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
            imgActual == imagenes.get(Type.CORRE_LEFT) ||
            imgActual == imagenes.get(Type.ARRIBA_L) ||
            imgActual == imagenes.get(Type.ABAJO_L)){
-                imgActual = imagenes.get(Type.IZQUIERDA);
+           imgActual = imagenes.get(Type.IZQUIERDA);
         }else{
                 imgActual = imagenes.get(Type.DERECHA);
         }
@@ -260,10 +262,8 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public void run() {
         while(true){
             for(int i = 0; i<bulletX.length ;i++){
-                if(/*isShot[i] && */imgActual==imagenes.get(Type.DERECHA)) 
-                    bulletX[i]+=20;
-                
-
+                if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
+                    bulletX[i]+=50;
                 if(isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)) 
                     bulletX[i]-=20;
 

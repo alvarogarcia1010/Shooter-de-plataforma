@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
+import View.Game.Character;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Play extends JFrame {
     public static Font fuenteSecundaria = new Font("Comic Sans MS", 3, 20);
     public static int height = 837; //700
     public static int width = 1000; //1000
+    public static Character c;
     
 
     public static JButton encender, apagar, inventario;
@@ -51,7 +53,6 @@ public class Play extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initialComponent();
         initGame();
-        
         eventos();
         setSize(width, height);
         setLocationRelativeTo(null);
@@ -69,7 +70,6 @@ public class Play extends JFrame {
             public void run() {
                 Play p = new Play();
                 p.setVisible(true);
-
             }
 
         });
@@ -81,6 +81,8 @@ public class Play extends JFrame {
 //        encender.setBounds(820, 500, 50, 50);
 //        apagar = new JButton(new ImageIcon("apagar.png"));
 //        apagar.setBounds(880,500,50,50);
+        c = new Character();
+        
 
         this.cronometro.initlabelTimer();
         this.puntuacion.initPuntajeComponents();
@@ -96,7 +98,7 @@ public class Play extends JFrame {
         container.add(this.vida);
         container.add(this.etiquetaVida);
         container.add(this.btnPause);
-
+        container.add(c);
     }
 
     public void initGame() {
@@ -197,6 +199,7 @@ public class Play extends JFrame {
                 Graphics buffer = back.createGraphics();
                 backOne.draw(buffer);
                 twoD.drawImage(back, null, 0, 0);
+                c.paintComponent(window);
      
             }
     }

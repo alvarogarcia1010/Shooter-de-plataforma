@@ -49,6 +49,6 @@ public class Background {
 
     public void draw(Graphics window) {
         window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
-        this.x -= 3;      
+        this.x -= 1;      
         }
 }
