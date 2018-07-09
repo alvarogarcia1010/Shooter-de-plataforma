@@ -217,7 +217,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         for(Hitbox hit : Play.c.getHitboxes()){
                 if(hitbox.bounds().intersects(hit.bounds())){
                     auxHit = hit;
-                    //Play.puntuacion.sumarPuntos();
+                    Play.puntuacion.sumarPuntos();
                     System.out.println("Headshot!");
                 }
             }
