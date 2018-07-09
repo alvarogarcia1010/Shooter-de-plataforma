@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -49,7 +50,8 @@ public class Bienvenida extends JFrame{
           bienvenida.setBounds(800,300,120,50);   
           about = new JButton(new ImageIcon("about.png"));
           about.setBounds(800, 400, 120, 50);
-          rank = new JButton(new ImageIcon("rank.png"));
+          rank = new JButton(new ImageIcon("rank.png"))
+                  ;
           rank.setBounds(800, 200, 120, 50);
           
           
@@ -64,6 +66,7 @@ public class Bienvenida extends JFrame{
           bienvenida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                usuario();
                 Personajes p = new Personajes();
                 p.setVisible(true);
                 dispose();  
@@ -102,6 +105,11 @@ public class Bienvenida extends JFrame{
 
     }
        
+       public void usuario(){
+           String usuario = JOptionPane.showInputDialog(null, "Usuario");
+           String password = JOptionPane.showInputDialog(null, "Contraseña");
+       }
+       
     private class PanelBienvenido extends JPanel{
  
             @Override
@@ -112,6 +120,8 @@ public class Bienvenida extends JFrame{
                 setOpaque(false);
                 super.paint(g);
             }
-}
+    }
+    
+    
 
 }

@@ -1,5 +1,6 @@
 package View;
 
+import Modelo.PlayerCharacter.CharacterManager;
 import View.Components.*;
 import java.awt.Component;
 import java.awt.Container;
@@ -163,11 +164,13 @@ public class Play extends JFrame {
     public class ScrollingBackground extends JPanel implements Runnable{
             private Background backOne;
             private BufferedImage back;
-
+            private Character p;
+            
             public ScrollingBackground() {
                 backOne = new Background();
                 new Thread(this).start();
                 setOpaque(false);
+                
             }
 
             @Override
