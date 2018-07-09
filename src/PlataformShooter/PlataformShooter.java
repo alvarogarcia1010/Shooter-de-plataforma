@@ -17,7 +17,7 @@ public class PlataformShooter {
                 Connection prueba = Connection.getInstance();
                 prueba.getConnection();
                 Bienvenida p = new Bienvenida();
-                
+
                 p.setVisible(true);
     }
     

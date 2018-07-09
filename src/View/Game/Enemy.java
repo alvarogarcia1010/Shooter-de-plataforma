@@ -5,6 +5,7 @@
  */
 package View.Game;
 
+import Modelo.Disparos.Disparo;
 import Modelo.PlayerCharacter.CharacterManager;
 import PlataformShooter.Type;
 import View.Game.Enemy.Actions;
@@ -31,7 +32,7 @@ import java.util.Arrays;
  * @author Alvaro García <alvarogarcia1010 at github.com>
  */
 
-public class Enemy extends JPanel implements ActionListener {
+public class Enemy extends JPanel implements ActionListener, Runnable{
     public Timer t = new Timer(50,this);
     public CharacterManager personaje;
     public Actions status;
@@ -44,6 +45,12 @@ public class Enemy extends JPanel implements ActionListener {
     private static final List<Actions> VALUES = Collections.unmodifiableList(Arrays.asList(Actions.values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
+    public int bulletNo = 0;
+    public int bulletX[] = new int[10];
+    public int bulletY[] = new int[10];
+    public  boolean isShot[] = new boolean[10];
+    
+    Thread thread = new Thread(this);
     
     public static Actions randomAction() {
         if(RANDOM.nextInt(100) <= 50){
@@ -71,7 +78,9 @@ public class Enemy extends JPanel implements ActionListener {
         this.personaje.addImg(Type.CORRE_LEFT, "./src/img/Marco/MarcoRuningL.gif");
         this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShoot.png");
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
-        this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
+        this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
+        this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
+        this.personaje.addImg(Type.MORIR, "./src/img/Boos/Boss4.gif");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
         this.imagenes.put(Type.IZQUIERDA, toolkit.getImage(personaje.getImg().get(Type.IZQUIERDA)));
@@ -79,6 +88,8 @@ public class Enemy extends JPanel implements ActionListener {
         this.imagenes.put(Type.CORRE_LEFT, toolkit.getImage(personaje.getImg().get(Type.CORRE_LEFT)));
         this.imagenes.put(Type.DISPARA_R, toolkit.getImage(personaje.getImg().get(Type.DISPARA_R)));
         this.imagenes.put(Type.DISPARA_L, toolkit.getImage(personaje.getImg().get(Type.DISPARA_L)));
+        this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
+        this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
         this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
 
         
@@ -86,14 +97,30 @@ public class Enemy extends JPanel implements ActionListener {
 //        this.posY = personaje.getPosicionActualY();
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
-        this.imgActual = this.imagenes.get(Type.CORRE_LEFT);
+        this.imgActual = this.imagenes.get(Type.MORIR);
         setStatus(status.WALK);
+        
+        for (int i = 0; i<bulletX.length; i++){
+            bulletX[i] = posX - 30;
+            bulletY[i] = posY + 60;         
+        }
+        
+        thread.start();
         //updatedAt = System.currentTimeMillis();
     }
     
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        for (int i = 0; i<bulletX.length; i++){
+            if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
+                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);    
+            }
+           
+            if (isShot[i] && imgActual==imagenes.get(Type.MORIR)){
+                g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
+            }
+        }
         g.drawImage(this.imgActual, this.posX,this.posY,this);
 
     }
@@ -104,23 +131,25 @@ public class Enemy extends JPanel implements ActionListener {
        // if(System.currentTimeMillis() - updatedAt > 3000){           
             switch(status){
                 case WALK:
-                    this.imgActual = this.imagenes.get(Type.CORRE_LEFT);
+                    this.imgActual = this.imagenes.get(Type.MORIR);
                     posX = posX - 1;
                     System.out.println("Camina");
                     //updatedAt = System.currentTimeMillis();
                     break;
                 case STOP:
-                    this.imgActual = this.imagenes.get(Type.IZQUIERDA);
+                    this.imgActual = this.imagenes.get(Type.MORIR);
                     System.out.println("Stop");
                     status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
                     break;
                 case SHOOT:
+                    shoot();
                     System.out.println("Shoot");
                     //updatedAt = System.currentTimeMillis();
                     break;
                 case JUMP:
                     System.out.println("Jump");
+                    status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
                     break;
             }
@@ -159,4 +188,41 @@ public class Enemy extends JPanel implements ActionListener {
         f.setVisible(true); 
     }
     
+    public void shoot(){
+        isShot[bulletNo] = true;
+        bulletX[bulletNo] = posX + 65;
+        Disparo.bulletY[bulletNo] = posY + 40;
+        ++bulletNo;
+        //System.out.println(":" + bulletNo);
+        //System.out.println(": "+ bulletX.length);
+        if(bulletNo>bulletX.length-1) 
+        bulletNo=0;
+    }
+    
+    @Override
+    public void run() {
+        while(true){
+            for(int i = 0; i<bulletX.length ;i++){
+                if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
+                    bulletX[i]+=20;
+                
+
+                if(isShot[i] && imgActual==imagenes.get(Type.MORIR)) 
+                    bulletX[i]-=20;
+                
+                
+                if(bulletX[i]> 1000 || bulletX[i]< 0){
+                    isShot[i] = false;
+                    bulletX[i] = posX + 20;
+                    bulletY[i] = posY + 10;
+                    
+                }
+            }
+            try{
+                Thread.sleep(20);
+            } catch (InterruptedException ex) {
+               repaint();            
+            }
+        }
+    }    
 }
