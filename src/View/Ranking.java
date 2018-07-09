@@ -5,11 +5,15 @@
  */
 package View;
 
+import Controllers.Dao.PartidasDao;
+import Controllers.Dao.RankingDao;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +32,8 @@ public class Ranking extends JFrame{
     public static int width = 900;
     PanelRanking fondo = new PanelRanking();
     JButton regresar = new JButton();
-    JTable top = new JTable();
+    JTable top;
+    JPanel table;
     DefaultTableModel tm;
     
     public Ranking(){
@@ -45,11 +50,16 @@ public class Ranking extends JFrame{
     public void initialcomponents(){
         regresar = new JButton(new ImageIcon("regresar.png"));
         regresar.setBounds(20, 5, 50, 50);
-        top.setBounds(190,130,500,400);
-        
+        this.table = new JPanel();
+        this.top = new JTable();
+        top.setBounds(25,250,800,200);
+        table.setBounds(25,250,800,200);
+        JScrollPane scrollPane = new JScrollPane(top);
+        scrollPane.setBounds(25, 250, 800, 200);
+        table.add(scrollPane);
         Container container = getContentPane();
         container.add(regresar);
-        container.add(top);
+        container.add(table);
         regresar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -66,25 +76,35 @@ public class Ranking extends JFrame{
             public Class<?> getColumnClass(int column){
                 switch (column){
                     case 0:
-                        return String.class;
+                        return Integer.class;
                     case 1:
                         return String.class;
                     case 2:
-                        return Integer.class;
+                        return String.class;
                     case 3:
                         return Integer.class;
                     default:
-                        return Boolean.class;
+                        return String.class;
                 }
             }  
             
         };
-        
+        tm.addColumn("N°");
         tm.addColumn("Nombre");
         tm.addColumn("Personaje");
         tm.addColumn("Puntuacion");
         tm.addColumn("Tiempo");
         
+        RankingDao partidas = new RankingDao();
+        ArrayList<Modelo.Jugador.Ranking> top10;
+        top10 = (ArrayList<Modelo.Jugador.Ranking>) partidas.top10();
+        
+        int i =1;
+        for(Modelo.Jugador.Ranking p : top10){
+            this.tm.addRow(new Object[]{i,p.getJugador(),p.getPersonaje(),p.getPuntuacion(),p.getTiempo()});
+            i++;
+        }
+ 
         top.setModel(tm);
     }
     

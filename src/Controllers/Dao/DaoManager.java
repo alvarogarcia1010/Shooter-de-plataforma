@@ -162,10 +162,10 @@ public abstract class DaoManager<T> implements DaoManagementInterface<T> {
         try{
             con = this.con.getConnection();
             Statement query = con.createStatement();
-            ResultSet resultado = query.executeQuery("SELECT * " +
-                                        "FROM partidas AS pa JOIN jugador AS j ON pa.fkIdJugador = j.id " +
-                                        "JOIN personaje AS p ON pa.fkIdPersonaje = p.id " +
-                                        "ORDER BY pa.puntaje DESC LIMIT 10");
+            ResultSet resultado = query.executeQuery("SELECT j.nombre AS jugador,p.nombre AS personaje ,pa.puntaje AS puntaje, pa.tiempo AS tiempo\n" +
+                                                    "FROM partidas AS pa JOIN jugador AS j ON pa.fkIdJugador = j.id\n" +
+                                                    " JOIN personaje AS p ON pa.fkIdPersonaje = p.id\n" +
+                                                    "ORDER BY pa.puntaje DESC LIMIT 10;");
             
             while(resultado.next()){
                 T row = mapToObject(resultado);

@@ -8,6 +8,7 @@ package View.Game;
 import Modelo.Disparos.Disparo;
 import Modelo.PlayerCharacter.CharacterManager;
 import PlataformShooter.Type;
+import View.Play;
 import java.awt.Graphics;
 import java.awt.Image;
 import static java.awt.Image.SCALE_AREA_AVERAGING;
@@ -39,8 +40,9 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public int bulletNo = 0;
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
-    public boolean isShot[] = new boolean[10];
+    public  boolean isShot[] = new boolean[10];
     
+
     Thread thread = new Thread(this);
 
     
@@ -62,8 +64,12 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
+
         this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
         this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
+
+        
+        
         this.personaje.addImg(Type.BG, "./src/img/bg.jpg");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
