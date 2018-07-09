@@ -37,9 +37,8 @@ import java.util.Arrays;
 
 
 
-public class Enemy extends JPanel implements ActionListener, Runnable{
+public class Enemy1 extends JPanel implements ActionListener, Runnable{
     public Timer t = new Timer(50,this);
-    public Hitbox hitbox;
     public CharacterManager personaje;
     public Actions status;
     public Toolkit toolkit;
@@ -55,7 +54,6 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
     public  boolean isShot[] = new boolean[10];
-    public boolean collision = false;
 
     Thread thread = new Thread(this);
 
@@ -73,7 +71,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
             //return VALUES.get(RANDOM.nextInt(SIZE));
     }
 
-    public Enemy(){
+    public Enemy1(){
         t.start();      
         setFocusable(true); 
         this.personaje = new CharacterManager();
@@ -84,7 +82,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
         this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
-        this.personaje.addImg(Type.ENEMY, "./src/img/Marco/MarcoRuningL.gif");
+        this.personaje.addImg(Type.MORIR, "./src/img/Boos/Boss4.gif");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
         this.imagenes.put(Type.IZQUIERDA, toolkit.getImage(personaje.getImg().get(Type.IZQUIERDA)));
@@ -94,14 +92,13 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.imagenes.put(Type.DISPARA_L, toolkit.getImage(personaje.getImg().get(Type.DISPARA_L)));
         this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
-        this.imagenes.put(Type.ENEMY, toolkit.getImage(personaje.getImg().get(Type.ENEMY)));
+        this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
 //        this.posX = personaje.getPosicionActualX();
 
 //        this.posY = personaje.getPosicionActualY();
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
-        this.imgActual = this.imagenes.get(Type.ENEMY);
-        this.hitbox = new Hitbox(posX, posY, 48, 42);
+        this.imgActual = this.imagenes.get(Type.MORIR);
         setStatus(status.WALK);
 
         
@@ -120,18 +117,18 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (int i = 0; i < bulletX.length; i++){
+        for (int i = 0; i<bulletX.length; i++){
             if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
                 g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);    
             }
       
-            if (isShot[i] && imgActual==imagenes.get(Type.ENEMY)){
+            if (isShot[i] && imgActual==imagenes.get(Type.MORIR)){
                 g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
             }
         }
-        g.drawImage(this.imgActual, this.posX, this.posY, this);
-        g.fillRect(hitbox.getX(), hitbox.getY(), 48, 42);
+        g.drawImage(this.imgActual, this.posX,this.posY,this);
     }
+
     
 
     @Override
@@ -142,15 +139,14 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
 
             switch(status){
                 case WALK:
-                    this.imgActual = this.imagenes.get(Type.ENEMY);
+                    this.imgActual = this.imagenes.get(Type.MORIR);
                     posX = posX - 1;
-                    hitbox.setX(posX);
                     System.out.println("Camina");
                     //updatedAt = System.currentTimeMillis();
                     break;
 
                 case STOP:
-                    this.imgActual = this.imagenes.get(Type.ENEMY);
+                    this.imgActual = this.imagenes.get(Type.MORIR);
                     System.out.println("Stop");
                     status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
@@ -177,7 +173,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
            // updatedAt = System.currentTimeMillis();
         //}
     }
-    
+
     
 
     public void setPosX(int posX){
@@ -205,7 +201,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     
     public static void main(String[] args) {
         JFrame f = new JFrame(); 
-        Enemy p = new Enemy();
+        Enemy1 p = new Enemy1();
         p.setPosX(900);       
         f.add(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -235,7 +231,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
                 if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
                     bulletX[i]+=20;
 
-                if(isShot[i] && imgActual==imagenes.get(Type.ENEMY)) 
+                if(isShot[i] && imgActual==imagenes.get(Type.MORIR)) 
 
                     bulletX[i]-=20;
                 
