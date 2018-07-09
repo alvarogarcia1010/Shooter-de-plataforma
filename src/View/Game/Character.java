@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +42,11 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public int bulletX[] = new int[10];
     public int bulletY[] = new int[10];
     public  boolean isShot[] = new boolean[10];
+    public Hitbox hitbox;
+    public Hitbox auxHit;
+    public ArrayList<Hitbox> hitboxes = new ArrayList<Hitbox>();
+    public ArrayList<Hitbox> balasEnemigas = new ArrayList<Hitbox>();
+    
     
 
     Thread thread = new Thread(this);
@@ -87,6 +93,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
         this.imagenes.put(Type.BG, toolkit.getImage(personaje.getImg().get(Type.BG)));
+        this.hitbox = new Hitbox(posX, posY, 48, 42);
         
 
         for (int i = 0; i<bulletX.length; i++){
@@ -114,11 +121,13 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         for (int i = 0; i<bulletX.length; i++){
             if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
                 g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
 
             }
             
             if (isShot[i] && imgActual==imagenes.get(Type.IZQUIERDA)){
                 g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
             }
 
         }
@@ -146,9 +155,11 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             deltaY=0;
             posY = 550; 
         } 
-        posX += deltaX; 
+        posX += deltaX;
+        hitbox.setX(posX += deltaX);
         posY += deltaY;
-        
+        hitbox.setY(posY += deltaY);
+        collision();
         repaint();
     }
 
@@ -249,6 +260,24 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             deltaY = 0;   
         }
  
+    }
+    
+    public void collision(){
+        for(Enemy en : Play.enemies){
+            for(Hitbox hit : en.getHitboxes()){
+                if(hitbox.bounds().intersects(hit.bounds())){
+                    auxHit = hit;
+                    Play.puntuacion.restarVida();
+                    System.out.println("Colision!");
+                }
+            }
+            en.getHitboxes().remove(auxHit);
+        }
+    }
+
+    
+    public ArrayList<Hitbox> getHitboxes(){
+        return hitboxes;
     }
     
     @Override
