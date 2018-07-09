@@ -29,7 +29,7 @@ public class About extends JFrame{
     public About(){
         super("About");
         initialcomponents();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(width,height);
         setLocationRelativeTo(null);
         add(fondo);

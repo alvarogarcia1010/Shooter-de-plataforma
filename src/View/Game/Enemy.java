@@ -10,6 +10,7 @@ import Modelo.Disparos.Disparo;
 import Modelo.PlayerCharacter.CharacterManager;
 import PlataformShooter.Type;
 import View.Game.Enemy.Actions;
+import View.Play;
 import java.awt.Graphics;
 import java.awt.Image;
 import static java.awt.Image.SCALE_AREA_AVERAGING;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,7 +41,7 @@ import java.util.Arrays;
 
 public class Enemy extends JPanel implements ActionListener, Runnable{
     public Timer t = new Timer(50,this);
-    public Hitbox hitbox;
+    public Hitbox hitboxEnemy;
     public CharacterManager personaje;
     public Actions status;
     public Toolkit toolkit;
@@ -56,6 +58,9 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public int bulletY[] = new int[10];
     public  boolean isShot[] = new boolean[10];
     public boolean collision = false;
+    public ArrayList<Hitbox> hitboxes = new ArrayList<Hitbox>();
+    public Hitbox hitbox;
+    public Hitbox auxHit;
 
     Thread thread = new Thread(this);
 
@@ -84,7 +89,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
         this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
         this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
-        this.personaje.addImg(Type.ENEMY, "./src/img/Marco/MarcoRuningL.gif");
+        this.personaje.addImg(Type.ENEMY, "./src/img/Boos/Boss1.gif");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
         this.imagenes.put(Type.IZQUIERDA, toolkit.getImage(personaje.getImg().get(Type.IZQUIERDA)));
@@ -101,18 +106,22 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         this.deltaX = personaje.getDeltaX();
         this.deltaY = personaje.getDeltaY();
         this.imgActual = this.imagenes.get(Type.ENEMY);
-        this.hitbox = new Hitbox(posX, posY, 48, 42);
+        this.hitbox = new Hitbox(posX, posY, 320, 320);
         setStatus(status.WALK);
 
         
 
-        for (int i = 0; i<bulletX.length; i++){
+        for (int i = 0; i < bulletX.length; i++){
             bulletX[i] = posX - 30;
-            bulletY[i] = posY + 60;         
+            bulletY[i] = posY + 120;         
 
         }
         thread.start();
         //updatedAt = System.currentTimeMillis();
+    }
+    
+    public ArrayList<Hitbox> getHitboxes(){
+        return hitboxes;
     }
 
     
@@ -122,22 +131,23 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         super.paintComponent(g);
         for (int i = 0; i < bulletX.length; i++){
             if(isShot[i] && imgActual== imagenes.get(Type.DERECHA)){
-                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);    
+                g.drawImage(imagenes.get(Type.BALADER), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
             }
       
             if (isShot[i] && imgActual==imagenes.get(Type.ENEMY)){
                 g.drawImage(imagenes.get(Type.BALAIZQ), bulletX[i], bulletY[i], this);
+                hitboxes.add(new Hitbox(bulletX[i], bulletY[i], 30, 5));
             }
         }
         g.drawImage(this.imgActual, this.posX, this.posY, this);
-        g.fillRect(hitbox.getX(), hitbox.getY(), 48, 42);
     }
     
 
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-
+        collision();
        // if(System.currentTimeMillis() - updatedAt > 3000){           
 
             switch(status){
@@ -169,7 +179,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
                     break;
             }
 
-            if(System.currentTimeMillis() - updatedAt > 3000){
+            if(System.currentTimeMillis() - updatedAt > 1000){
                 status = randomAction();
                 updatedAt = System.currentTimeMillis();
             }
@@ -201,24 +211,25 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public Actions getStatus(){
         return status;
     }
-
     
-    public static void main(String[] args) {
-        JFrame f = new JFrame(); 
-        Enemy p = new Enemy();
-        p.setPosX(900);       
-        f.add(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.setSize(1000,700); 
-        f.setVisible(true); 
+    
+    public void collision(){
+        for(Hitbox hit : Play.c.getHitboxes()){
+                if(hitbox.bounds().intersects(hit.bounds())){
+                    auxHit = hit;
+                    Play.puntuacion.sumarPuntos();
+                    System.out.println("Headshot!");
+                }
+            }
+            Play.c.getHitboxes().remove(auxHit);
     }
-
+    
     
 
     public void shoot(){
         isShot[bulletNo] = true;
-        bulletX[bulletNo] = posX + 65;
-        Disparo.bulletY[bulletNo] = posY + 40;
+        bulletX[bulletNo] = posX + 30;
+        bulletY[bulletNo] = posY + 220;
         ++bulletNo;
         //System.out.println(":" + bulletNo);
         //System.out.println(": "+ bulletX.length);
