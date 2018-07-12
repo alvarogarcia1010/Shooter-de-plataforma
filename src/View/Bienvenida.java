@@ -28,7 +28,8 @@ import javax.swing.JPanel;
 public class Bienvenida extends JFrame{
       public static int height = 700;
       public static int width = 1000;
-      public static String usuario = "Default";
+      public static String usuario = "Alvaro";
+      public static Jugador jugadorActual;
       private JButton bienvenida;
       private JButton about;
       private JButton rank;
@@ -110,9 +111,9 @@ public class Bienvenida extends JFrame{
        public void usuario(){
            usuario = JOptionPane.showInputDialog(null, "Usuario");
            JugadorDao jugadorDao= new JugadorDao();
-           Jugador jugador = new Jugador();
-           jugador.setNombre(usuario);
-           jugadorDao.insert(jugador);
+           jugadorActual = new Jugador();
+           jugadorActual.setNombre(usuario);
+           jugadorDao.insert(jugadorActual);
        }
        
     private class PanelBienvenido extends JPanel{

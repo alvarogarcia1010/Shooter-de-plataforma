@@ -16,7 +16,7 @@ public class Musica {
     public static AudioStream audio1;
     
         
-    public void musica(){
+    public Musica(){
     
         try{
             String sonido1 = "./src/Music/Music.wav";

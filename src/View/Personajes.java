@@ -74,6 +74,7 @@ public class Personajes extends JFrame{
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
                 p.setVisible(true);
+                Play.personaje = 1;
                 dispose();  
             }
 
@@ -85,6 +86,7 @@ public class Personajes extends JFrame{
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
                 p.setVisible(true);
+                Play.personaje = 2;
                 dispose();  
             }
 
@@ -96,7 +98,9 @@ public class Personajes extends JFrame{
             public void actionPerformed(ActionEvent ae) {
                 Play p = new Play();
                 p.setVisible(true);
+                Play.personaje = 3;
                 dispose();  
+                
             }
 
         });

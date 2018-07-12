@@ -35,7 +35,7 @@ public class Tiempo{
         //Etiqueta Cronometro
         Play.labelTimer = new JLabel("00:00:00");
         Play.labelTimer.setFont(Play.fuente);
-        Play.labelTimer.setForeground(Color.BLACK);
+        Play.labelTimer.setForeground(Color.WHITE);
 //        Play.labelTimer.setOpaque(true);
 //        Play.labelTimer.setBackground(Color.WHITE);
         Play.labelTimer.setHorizontalAlignment(JLabel.CENTER);
@@ -44,11 +44,11 @@ public class Tiempo{
         
        
         
-       // Boton Pausa
-        Play.btnPause = new JButton("SUMAR PUNTAJE");
-        Play.btnPause.setFont(Play.fuente);
-        Play.btnPause.setForeground(Color.BLUE);
-        Play.btnPause.setBounds(820, 50,150,30);
+//       // Boton Pausa
+//        Play.btnPause = new JButton("SUMAR PUNTAJE");
+//        Play.btnPause.setFont(Play.fuente);
+//        Play.btnPause.setForeground(Color.BLUE);
+//        Play.btnPause.setBounds(820, 50,150,30);
     }
     
     public void initTimer(){

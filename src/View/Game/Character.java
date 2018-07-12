@@ -34,8 +34,8 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
     public Timer t = new Timer(50,this);
     public CharacterManager personaje;
     public Toolkit toolkit;
-    public HashMap<Type, Image> imagenes;
-    public Image imgActual;
+    public static HashMap<Type, Image> imagenes;
+    public static Image imgActual;
     public int posX =30,posY=440;
     public int deltaX=0,deltaY=0;
     public int bulletNo = 0;
@@ -68,7 +68,6 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         this.personaje.addImg(Type.CORRE_LEFT, "./src/img/Marco/MarcoRuningL.gif");
         this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShootR.png");
         this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
-        this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
         switch(Play.x){
             case 1:
@@ -144,6 +143,10 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
         
         g.drawImage(this.imgActual, this.posX,this.posY,this);
 
+    }
+    
+    public void imgMorir(){
+        imgActual = imagenes.get(Type.MORIR);
     }
     
     @Override
@@ -269,7 +272,6 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
             deltaX = 0;
             deltaY = 0;   
         }
- 
     }
     
     public void collision(){
@@ -281,7 +283,7 @@ public class Character extends JPanel implements ActionListener, KeyListener, Ru
                     System.out.println("Colision!");
                 }
             }
-            en.getHitboxes().remove(auxHit);
+            en.getHitboxes().clear();
         }
     }
 

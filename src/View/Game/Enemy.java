@@ -48,6 +48,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public HashMap<Type, Image> imagenes;
     public Image imgActual;
     public int posX =1000,posY=350;
+    public static int vida = 1000;
     public int deltaX=0,deltaY=0;
     public long updatedAt = 0;
     private static final List<Actions> VALUES = Collections.unmodifiableList(Arrays.asList(Actions.values()));
@@ -82,21 +83,13 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
         t.start();      
         setFocusable(true); 
         this.personaje = new CharacterManager();
-        this.personaje.addImg(Type.IZQUIERDA, "./src/img/Marco/MarcoLeft.png");
-        this.personaje.addImg(Type.CORRE_RIGHT, "./src/img/Marco/MarcoRuning.gif");
-        this.personaje.addImg(Type.CORRE_LEFT, "./src/img/Marco/MarcoRuningL.gif");
-        this.personaje.addImg(Type.DISPARA_R, "./src/img/Marco/MarcoShoot.png");
-        this.personaje.addImg(Type.DISPARA_L, "./src/img/Marco/MarcoShootL.png");
-        this.personaje.addImg(Type.BALADER, "./src/img/bullet.gif");
-        this.personaje.addImg(Type.BALAIZQ, "./src/img/bullet1.gif");
+        this.personaje.addImg(Type.MORIR, "./src/img/Marco/MarcoDead.png");
+        this.personaje.addImg(Type.BALADER, "./src/img/misil.gif");
+        this.personaje.addImg(Type.BALAIZQ, "./src/img/misil1.gif");
         this.personaje.addImg(Type.ENEMY, "./src/img/Boos/Boss1.gif");
         this.toolkit = Toolkit.getDefaultToolkit();
         this.imagenes = new HashMap<>();
-        this.imagenes.put(Type.IZQUIERDA, toolkit.getImage(personaje.getImg().get(Type.IZQUIERDA)));
-        this.imagenes.put(Type.CORRE_RIGHT, toolkit.getImage(personaje.getImg().get(Type.CORRE_RIGHT)));
-        this.imagenes.put(Type.CORRE_LEFT, toolkit.getImage(personaje.getImg().get(Type.CORRE_LEFT)));
-        this.imagenes.put(Type.DISPARA_R, toolkit.getImage(personaje.getImg().get(Type.DISPARA_R)));
-        this.imagenes.put(Type.DISPARA_L, toolkit.getImage(personaje.getImg().get(Type.DISPARA_L)));
+        this.imagenes.put(Type.MORIR, toolkit.getImage(personaje.getImg().get(Type.MORIR)));
         this.imagenes.put(Type.BALADER, toolkit.getImage(personaje.getImg().get(Type.BALADER)));
         this.imagenes.put(Type.BALAIZQ, toolkit.getImage(personaje.getImg().get(Type.BALAIZQ)));
         this.imagenes.put(Type.ENEMY, toolkit.getImage(personaje.getImg().get(Type.ENEMY)));
@@ -148,6 +141,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
     public void actionPerformed(ActionEvent e) {
         repaint();
         collision();
+        morir();
        // if(System.currentTimeMillis() - updatedAt > 3000){           
 
             switch(status){
@@ -177,11 +171,16 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
                     status = VALUES.get(2);
                     //updatedAt = System.currentTimeMillis();
                     break;
+                    
             }
 
             if(System.currentTimeMillis() - updatedAt > 1000){
+                if(false){
+                    
+                }else{
                 status = randomAction();
                 updatedAt = System.currentTimeMillis();
+                }
             }
             //status = randomAction();
            // updatedAt = System.currentTimeMillis();
@@ -218,10 +217,18 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
                 if(hitbox.bounds().intersects(hit.bounds())){
                     auxHit = hit;
                     Play.puntuacion.sumarPuntos();
+                    this.vida-= 5;
                     System.out.println("Headshot!");
                 }
             }
-            Play.c.getHitboxes().remove(auxHit);
+            Play.c.getHitboxes().clear();
+    }
+    
+    public void morir(){
+        if (vida<1){
+            imgActual = imagenes.get(Type.MORIR); 
+            
+        }
     }
     
     
@@ -241,7 +248,7 @@ public class Enemy extends JPanel implements ActionListener, Runnable{
 
     @Override
     public void run() {
-        while(true){
+        while(vida > 1){
             for(int i = 0; i<bulletX.length ;i++){
                 if(isShot[i] && imgActual==imagenes.get(Type.DERECHA)) 
                     bulletX[i]+=20;

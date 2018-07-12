@@ -9,6 +9,8 @@ import Modelo.Jugador.Jugador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -31,8 +33,20 @@ public class JugadorDao extends DaoManager<Jugador>{
 
     @Override
     PreparedStatement getSelectStatement(Connection con, Jugador find, String by) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        String query = "SELECT * FROM " + infoTabla.TABLE_NAME + " WHERE " + by + " = ? ";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement(query);
+            if (by.equals(infoTabla.PRIMARY_KEY)) {
+                preparedStatement.setInt(1, find.getId());
+            } else if (by.equals(infoTabla.fields[0])) {
+                preparedStatement.setString(1, "%" + find.getNombre() + "%");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;    }
+    
 
     @Override
     PreparedStatement getInsertStatement(Connection con, Jugador _new) {
@@ -57,6 +71,10 @@ public class JugadorDao extends DaoManager<Jugador>{
     @Override
     PreparedStatement getUpdateStatement(Connection con, Jugador updateObject) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public List<Jugador> findByNombre(Jugador jugador) {
+        return findBy(jugador, infoTabla.fields[0]);
     }
     
 }

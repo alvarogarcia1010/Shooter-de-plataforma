@@ -35,19 +35,18 @@ public class Play extends JFrame {
     public static int width = 1000; //1000
 
     public static Character c;
-
+    public static Enemy e,e1;
 
     //public AudioStream audio1;
 
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-    public static Enemy e,e1;
+
     public static Musica m = new Musica();
+            
+    public static int personaje = 1;
 
-
-    
-
-
+        
     //Controladores de los componentes
     public static Tiempo cronometro = new Tiempo();
     public static Puntaje puntuacion = new Puntaje();
@@ -101,7 +100,6 @@ public class Play extends JFrame {
         container.add(this.puntaje);
         container.add(this.vida);
         container.add(this.etiquetaVida);
-        container.add(this.btnPause);
         container.add(c);
         container.add(e);
         container.add(e1);
@@ -113,14 +111,7 @@ public class Play extends JFrame {
 
     public void eventos() {
 
-        btnPause.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-//                puntuacion.sumarPuntos();
-                  puntuacion.restarVida();
-            }
 
-        });
     }
 
 
